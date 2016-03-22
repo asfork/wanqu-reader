@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Wanqu Reader</string>
+    <string name="via_app">(via Wanqu Reader: %1$s)</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="snackbar_close">Close</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="button_random">Feeling Lucky</string>
+
+    <string name="title_pattern">%1$s 第%2$d期</string>
+</resources>
