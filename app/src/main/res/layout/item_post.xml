@@ -1,26 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--
+    CardView就是一个卡片样式的FrameLayout。
+
+    参数介绍：
+        app:cardBackgroundColor  :   背景颜色
+        app:cardCornerRadius    ：   设置圆角。
+        app:cardElevation       ：    阴影。
+        app:cardMaxElevation    ：       最大阴影。
+        app:cardPreventCornerOverlap  ： 在v20和之前的版本中添加内边距，
+                                    这个属性是为了防止卡片内容和边角的重叠。
+
+       app:cardUseCompatPadding  ：  设置内边距，v21+的版本和之前的版本仍旧具有一样的计算方式
+       android:foreground : 触摸反馈动画
+-->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/element_padding">
+    android:layout_gravity="center"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_title" />
+        android:orientation="vertical"
+        android:padding="@dimen/element_padding">
 
-    <TextView
-        android:id="@+id/tv_domain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_subtitle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_summary" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/tv_header_domain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textSize="@dimen/text_size_vsmall" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_header_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_vsmall" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_vsmall"
+                        android:text="@string/separator"/>
+
+                    <TextView
+                        android:id="@+id/tv_header_costs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_vsmall" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_post_bookmark_border_black_24dp"
+                android:tint="@color/red700"
+                android:background="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_large" />
+
+        <TextView
+            android:id="@+id/tv_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

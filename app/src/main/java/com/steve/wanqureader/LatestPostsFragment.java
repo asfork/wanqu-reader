@@ -1,6 +1,8 @@
 package com.steve.wanqureader;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +27,7 @@ import retrofit2.Response;
  * Created by steve on 3/22/16.
  */
 public class LatestPostsFragment extends BaseFragment
-        implements SwipeRefreshLayout.OnRefreshListener {
+        implements SwipeRefreshLayout.OnRefreshListener, PostsAdapter.OnItemClickListener {
     List<Post> posts;
     PostsAdapter postsAdapter;
 
@@ -40,10 +42,10 @@ public class LatestPostsFragment extends BaseFragment
     @Override
     protected void initView(Bundle savedInstanceState) {
         swipeRefreshLayout.setColorSchemeResources(
-                R.color.google_blue,
-                R.color.google_green,
-                R.color.google_red,
-                R.color.google_yellow
+                R.color.blue700,
+                R.color.green700,
+                R.color.red700,
+                R.color.orange700
         );
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -54,6 +56,7 @@ public class LatestPostsFragment extends BaseFragment
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         fetchingRandomPost(mRootView);
         postsAdapter = new PostsAdapter(posts, context);
+        postsAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(postsAdapter);
 
 //        RecyclerView.ItemDecoration itemDecoration =
@@ -64,6 +67,13 @@ public class LatestPostsFragment extends BaseFragment
     @Override
     public void onRefresh() {
         fetchingRandomPost(mRootView);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
+        CustomTabActivityHelper.openCustomTab(this.getActivity(), customTabsIntent,
+                Uri.parse(posts.get(position).url), new WebviewFallback());
     }
 
     private void fetchingRandomPost(final View view) {

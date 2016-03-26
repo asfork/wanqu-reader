@@ -10,9 +10,8 @@ import com.google.gson.Gson;
 import com.steve.wanqureader.model.WanquService;
 import com.steve.wanqureader.model.entitiy.IssueResult;
 import com.steve.wanqureader.model.entitiy.Post;
+import com.steve.wanqureader.util.DateUtil;
 import com.steve.wanqureader.util.SnackbarUtil;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -27,13 +26,16 @@ import retrofit2.Response;
  * If it works, I created it. If not, I didn't.
  */
 public class RandomPostFragment extends BaseFragment {
-
+    @Bind(R.id.tv_header_domain)
+    TextView domainView;
     @Bind(R.id.tv_title)
     TextView titleView;
-    @Bind(R.id.tv_domain)
-    TextView domainView;
     @Bind(R.id.tv_summary)
     TextView summaryView;
+    @Bind(R.id.tv_header_date)
+    TextView dateView;
+    @Bind(R.id.tv_header_costs)
+    TextView costsView;
 
     @Override
     public int getContentViewId() {
@@ -69,8 +71,12 @@ public class RandomPostFragment extends BaseFragment {
                     Log.d("Random", "response = " + new Gson().toJson(issueResult));
                     Post post = issueResult.data.posts.get(0);
 
+                    String readTime = context.getResources().getString(R.string.read_time);
+
+                    domainView.setText(post.urlDomain);
+                    dateView.setText(DateUtil.displayTime(post.createdAt));
+                    costsView.setText(String.format(readTime, post.readTime));
                     titleView.setText(post.title);
-                    domainView.setText(post.url);
                     summaryView.setText(post.summary);
                 } else {
                     SnackbarUtil.show(mRootView, "Response Error" + response.code(), 0);

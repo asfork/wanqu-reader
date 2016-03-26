@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.steve.wanqureader.model.entitiy.Post;
+import com.steve.wanqureader.util.DateUtil;
 
 import java.util.List;
 
@@ -33,11 +34,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Post post = posts.get(position);
+        String readTime = context.getResources().getString(R.string.read_time);
+
+        holder.domainView.setText(post.urlDomain);
+        holder.dateView.setText(DateUtil.displayTime(post.createdAt));
+        holder.costsView.setText(String.format(readTime, post.readTime));
         holder.titleView.setText(post.title);
-        holder.domainView.setText(post.url);
         holder.summaryView.setText(post.summary);
+
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(holder.itemView, position);
+                }
+            });
+        }
     }
 
     @Override
@@ -50,16 +64,30 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     public final static class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.tv_header_domain)
+        TextView domainView;
         @Bind(R.id.tv_title)
         TextView titleView;
-        @Bind(R.id.tv_domain)
-        TextView domainView;
         @Bind(R.id.tv_summary)
         TextView summaryView;
+        @Bind(R.id.tv_header_date)
+        TextView dateView;
+        @Bind(R.id.tv_header_costs)
+        TextView costsView;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 }
