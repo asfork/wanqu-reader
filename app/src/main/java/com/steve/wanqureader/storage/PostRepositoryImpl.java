@@ -35,12 +35,12 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post getPostById(long id) {
+    public Post fetchPostById(long id) {
         return null;
     }
 
     @Override
-    public List<Post> getLatestPosts() {
+    public List<Post> fetchPostsList() {
         WanquService wanqu = RestClient.getService(WanquService.class);
         Call<List<Post>> call = wanqu.listPosts();
         try {
@@ -53,7 +53,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getPostsByIssuesId() {
+    public List<Post> fetchPostsByIssuesId() {
         return null;
     }
 }

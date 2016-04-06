@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onRefresh() {
-        mMainPresenter.getLatestPosts();
+        mMainPresenter.fetchPostsList();
     }
 
     @Override

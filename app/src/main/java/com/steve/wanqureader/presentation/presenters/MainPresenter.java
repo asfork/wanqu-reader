@@ -22,7 +22,7 @@ public interface MainPresenter extends BasePresenter {
         void onPostLiked(Post post);
     }
 
-    void getLatestPosts();
+    void fetchPostsList();
 
     void likePost(Post post);
 }

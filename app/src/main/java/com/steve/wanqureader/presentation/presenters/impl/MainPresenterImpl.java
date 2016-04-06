@@ -2,8 +2,8 @@ package com.steve.wanqureader.presentation.presenters.impl;
 
 import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
-import com.steve.wanqureader.domain.interactors.GetLatestPostsInteractor;
-import com.steve.wanqureader.domain.interactors.impl.GetLatestPostsInteractorImpl;
+import com.steve.wanqureader.domain.interactors.FetchPostsListInteractor;
+import com.steve.wanqureader.domain.interactors.impl.FetchPostsListInteractorImpl;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.presentation.presenters.MainPresenter;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by steve on 3/28/16.
  */
 public class MainPresenterImpl extends AbstractPresenter
-        implements MainPresenter, GetLatestPostsInteractor.Callback {
+        implements MainPresenter, FetchPostsListInteractor.Callback {
 
     private MainPresenter.View mView;
     private PostRepository mPostRepository;
@@ -28,14 +28,14 @@ public class MainPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void getLatestPosts() {
-        GetLatestPostsInteractorImpl getLatestPostsInteractor = new GetLatestPostsInteractorImpl(
+    public void fetchPostsList() {
+        FetchPostsListInteractorImpl fetchPostsListInteractor = new FetchPostsListInteractorImpl(
                 mExecutor,
                 mMainThread,
                 mPostRepository,
                 this
         );
-        getLatestPostsInteractor.execute();
+        fetchPostsListInteractor.execute();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class MainPresenterImpl extends AbstractPresenter
 
     @Override
     public void resume() {
-        getLatestPosts();
+        fetchPostsList();
     }
 
     @Override

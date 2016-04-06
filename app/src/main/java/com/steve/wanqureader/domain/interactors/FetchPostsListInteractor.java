@@ -9,7 +9,7 @@ import java.util.List;
  * Created by steve on 3/28/16.
  * This interactor is responsible for retrieving a list of posts from the network.
  */
-public interface GetLatestPostsInteractor extends Interactor {
+public interface FetchPostsListInteractor extends Interactor {
     interface Callback {
         void onPostsRetrieved(List<Post> posts);
     }

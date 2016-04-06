@@ -2,7 +2,7 @@ package com.steve.wanqureader.domain.interactors.impl;
 
 import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
-import com.steve.wanqureader.domain.interactors.GetLatestPostsInteractor;
+import com.steve.wanqureader.domain.interactors.FetchPostsListInteractor;
 import com.steve.wanqureader.domain.interactors.base.AbstractInteractor;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
@@ -15,12 +15,12 @@ import java.util.List;
  * This interactor handles getting all costs from the database in a sorted manner. Costs should be sorted by date with
  * the most recent one coming first and the oldest one coming last.
  */
-public class GetLatestPostsInteractorImpl extends AbstractInteractor implements GetLatestPostsInteractor {
+public class FetchPostsListInteractorImpl extends AbstractInteractor implements FetchPostsListInteractor {
     private Callback mCallback;
     private PostRepository mPostRepository;
 
-    public GetLatestPostsInteractorImpl(Executor threadExecutor, MainThread mainThread, PostRepository postRepository,
-                                        Callback callback) {
+    public FetchPostsListInteractorImpl(Executor threadExecutor, MainThread mainThread,
+                                        PostRepository postRepository, Callback callback) {
         super(threadExecutor, mainThread);
 
         if (postRepository == null || callback == null) {
@@ -34,7 +34,7 @@ public class GetLatestPostsInteractorImpl extends AbstractInteractor implements 
     @Override
     public void run() {
         // retrieve the posts from the disk or network
-        final List<Post> posts = mPostRepository.getLatestPosts();
+        final List<Post> posts = mPostRepository.fetchPostsList();
 
         // show posts on the main thread
         mMainThread.post(new Runnable() {
