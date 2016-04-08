@@ -9,6 +9,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Steve Zhang
@@ -19,13 +20,13 @@ import retrofit2.http.Path;
 
 public interface WanquService {
     @GET("posts")
-    Call<List<Post>> listPosts();
+    Call<List<Post>> listPosts(@Query("page") Integer page);
 
     @GET("posts/{id}")
     Call<List<Post>> postById(@Path("id") int postId);
 
     @GET("issues")
-    Call<List<Issue>> listIssues();
+    Call<List<Issue>> listIssues(@Query("page") Integer page);
 
     @GET("issue/{id}")
     Call<List<Post>> postsByIssue(@Path("id") int issueId);
