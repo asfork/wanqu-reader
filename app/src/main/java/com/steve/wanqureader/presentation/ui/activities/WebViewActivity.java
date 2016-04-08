@@ -23,27 +23,31 @@ import butterknife.ButterKnife;
 /**
  * Created by steve on 4/8/16.
  */
-public class AboutActivity extends AppCompatActivity {
-    private static final String TAG = "AboutActivity";
+public class WebViewActivity extends AppCompatActivity {
+    private static final String TAG = "WebViewActivity";
 
     private View containerView;
     private LinearLayout mLinearLayout;
     private WebView mWebView;
+    private String url;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    public static void actionStart(Context context) {
-        Intent intent = new Intent(context, AboutActivity.class);
+    public static void actionStart(Context context, String url) {
+        Intent intent = new Intent(context, WebViewActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(Constant.EXTRA_URL, url);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
+
+        url = getIntent().getStringExtra(Constant.EXTRA_URL);
 
         toolbar.setTitle(getString(R.string.activity_about));
         setSupportActionBar(toolbar);
@@ -51,7 +55,7 @@ public class AboutActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        containerView = View.inflate(this, R.layout.view_about, null);
+        containerView = View.inflate(this, R.layout.view_web, null);
         mLinearLayout = (LinearLayout) containerView.findViewById(R.id.linear_layout);
         mWebView = (WebView) containerView.findViewById(R.id.web_view);
         FrameLayout parentsView = (FrameLayout) findViewById(R.id.frame_layout);
@@ -72,7 +76,7 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mWebView.loadUrl(Constant.HTML_ABOUT);
+        mWebView.loadUrl(url);
     }
 
     @Override
