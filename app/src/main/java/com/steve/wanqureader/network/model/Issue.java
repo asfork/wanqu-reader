@@ -8,53 +8,82 @@ public class Issue {
     @SerializedName("creation_date")
     @Expose
     private String creationDate;
-    @SerializedName("issue_id")
+    @SerializedName("id")
     @Expose
-    private Integer issueId;
-    @SerializedName("summary")
+    private Integer id;
+    @SerializedName("issue_no")
     @Expose
-    private String summary;
+    private Integer issueNo;
+    @SerializedName("readable_title")
+    @Expose
+    private String readableTitle;
 
     /**
-     * @return The creationDate
+     *
+     * @return
+     * The creationDate
      */
     public String getCreationDate() {
         return creationDate;
     }
 
     /**
-     * @param creationDate The creation_date
+     *
+     * @param creationDate
+     * The creation_date
      */
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
     /**
-     * @return The issueId
+     *
+     * @return
+     * The id
      */
-    public Integer getIssueId() {
-        return issueId;
+    public Integer getId() {
+        return id;
     }
 
     /**
-     * @param issueId The issue_id
+     *
+     * @param id
+     * The id
      */
-    public void setIssueId(Integer issueId) {
-        this.issueId = issueId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
-     * @return The summary
+     *
+     * @return
+     * The issueNo
      */
-    public String getSummary() {
-        return summary;
+    public Integer getIssueNo() {
+        return issueNo;
     }
 
     /**
-     * @param summary The summary
+     *
+     * @param issueNo
+     * The issue_no
      */
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setIssueNo(Integer issueNo) {
+        this.issueNo = issueNo;
+    }
+
+    /**
+     * @return The readableTitle
+     */
+    public String getReadableTitle() {
+        return readableTitle;
+    }
+
+    /**
+     * @param readableTitle The readable_title
+     */
+    public void setReadableTitle(String readableTitle) {
+        this.readableTitle = readableTitle;
     }
 
 }

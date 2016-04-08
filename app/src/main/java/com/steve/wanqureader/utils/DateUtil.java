@@ -9,7 +9,7 @@ import java.util.Locale;
  */
 public class DateUtil {
     public static String displayTime(String timestampString) {
-        Long timestamp = Long.parseLong(timestampString) * 1000;
+        Long timestamp = Long.parseLong(timestampString);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy", Locale.CHINA);
         String t1 = dateFormat.format(timestamp);
         String t2 = dateFormat.format(System.currentTimeMillis());
@@ -19,6 +19,11 @@ public class DateUtil {
         } else {
             return timeStamp2Date(timestamp, "yyyy-M-d");
         }
+    }
+
+    public static String titleTime(String timestampString) {
+        Long timestamp = Long.parseLong(timestampString);
+        return timeStamp2Date(timestamp, "yyyy-M-d");
     }
 
     private static String timeStamp2Date(Long timestamp, String formats) {
