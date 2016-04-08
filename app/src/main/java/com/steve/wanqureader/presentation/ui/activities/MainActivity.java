@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
 
@@ -92,10 +93,10 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void onClickReadPost(Post post) {
+    public void onClickReadPost(String url, String slug) {
         CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent,
-                Uri.parse(post.getUrl()), new WebviewFallback());
+                Uri.parse(url), new WebviewFallback());
     }
 
     @Override

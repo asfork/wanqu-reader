@@ -15,7 +15,7 @@ public interface MainPresenter extends BasePresenter {
 
         void showPosts(List<Post> posts);
 
-        void onClickReadPost(Post post);
+        void onClickReadPost(String url, String slug);
 
         void onClickLikePost(Post post);
 
@@ -23,6 +23,8 @@ public interface MainPresenter extends BasePresenter {
     }
 
     void fetchPostsList();
+
+    void fetchMorePostsList(Integer page);
 
     void likePost(Post post);
 }

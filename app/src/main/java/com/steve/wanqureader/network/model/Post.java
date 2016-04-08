@@ -12,12 +12,15 @@ public class Post {
     @SerializedName("creation_date")
     @Expose
     private String creationDate;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("issue")
     @Expose
     private Integer issue;
-    @SerializedName("post_id")
+    @SerializedName("post_no")
     @Expose
-    private Integer postId;
+    private Integer postNo;
     @SerializedName("read_time_minutes")
     @Expose
     private Integer readTimeMinutes;
@@ -27,6 +30,9 @@ public class Post {
     @SerializedName("readable_summary")
     @Expose
     private String readableSummary;
+    @SerializedName("readable_title")
+    @Expose
+    private String readableTitle;
     @SerializedName("slug")
     @Expose
     private String slug;
@@ -47,17 +53,37 @@ public class Post {
     private String urlDomain;
 
     /**
-     * @return The creationDate
+     *
+     * @return
+     * The creationDate
      */
     public String getCreationDate() {
         return creationDate;
     }
 
     /**
-     * @param creationDate The creation_date
+     *
+     * @param creationDate
+     * The creation_date
      */
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    /**
+     *
+     * @return
+     * The id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id The id
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -68,66 +94,100 @@ public class Post {
     }
 
     /**
-     * @param issue The issue
+     *
+     * @param issue
+     * The issue
      */
     public void setIssue(Integer issue) {
         this.issue = issue;
     }
 
     /**
-     * @return The postId
+     *
+     * @return
+     * The postNo
      */
-    public Integer getPostId() {
-        return postId;
+    public Integer getPostNo() {
+        return postNo;
     }
 
     /**
-     * @param postId The post_id
+     *
+     * @param postNo
+     * The post_no
      */
-    public void setPostId(Integer postId) {
-        this.postId = postId;
+    public void setPostNo(Integer postNo) {
+        this.postNo = postNo;
     }
 
     /**
-     * @return The readTimeMinutes
+     *
+     * @return
+     * The readTimeMinutes
      */
     public Integer getReadTimeMinutes() {
         return readTimeMinutes;
     }
 
     /**
-     * @param readTimeMinutes The read_time_minutes
+     *
+     * @param readTimeMinutes
+     * The read_time_minutes
      */
     public void setReadTimeMinutes(Integer readTimeMinutes) {
         this.readTimeMinutes = readTimeMinutes;
     }
 
     /**
-     * @return The readableArticle
+     *
+     * @return
+     * The readableArticle
      */
     public String getReadableArticle() {
         return readableArticle;
     }
 
     /**
-     * @param readableArticle The readable_article
+     *
+     * @param readableArticle
+     * The readable_article
      */
     public void setReadableArticle(String readableArticle) {
         this.readableArticle = readableArticle;
     }
 
     /**
-     * @return The readableSummary
+     *
+     * @return
+     * The readableSummary
      */
     public String getReadableSummary() {
         return readableSummary;
     }
 
     /**
-     * @param readableSummary The readable_summary
+     *
+     * @param readableSummary
+     * The readable_summary
      */
     public void setReadableSummary(String readableSummary) {
         this.readableSummary = readableSummary;
+    }
+
+    /**
+     *
+     * @return
+     * The readableTitle
+     */
+    public String getReadableTitle() {
+        return readableTitle;
+    }
+
+    /**
+     * @param readableTitle The readable_title
+     */
+    public void setReadableTitle(String readableTitle) {
+        this.readableTitle = readableTitle;
     }
 
     /**
@@ -138,77 +198,99 @@ public class Post {
     }
 
     /**
-     * @param slug The slug
+     *
+     * @param slug
+     * The slug
      */
     public void setSlug(String slug) {
         this.slug = slug;
     }
 
     /**
-     * @return The summary
+     *
+     * @return
+     * The summary
      */
     public String getSummary() {
         return summary;
     }
 
     /**
-     * @param summary The summary
+     *
+     * @param summary
+     * The summary
      */
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
     /**
-     * @return The tags
+     *
+     * @return
+     * The tags
      */
     public List<Integer> getTags() {
         return tags;
     }
 
     /**
-     * @param tags The tags
+     *
+     * @param tags
+     * The tags
      */
     public void setTags(List<Integer> tags) {
         this.tags = tags;
     }
 
     /**
-     * @return The title
+     *
+     * @return
+     * The title
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * @param title The title
+     *
+     * @param title
+     * The title
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * @return The url
+     *
+     * @return
+     * The url
      */
     public String getUrl() {
         return url;
     }
 
     /**
-     * @param url The url
+     *
+     * @param url
+     * The url
      */
     public void setUrl(String url) {
         this.url = url;
     }
 
     /**
-     * @return The urlDomain
+     *
+     * @return
+     * The urlDomain
      */
     public String getUrlDomain() {
         return urlDomain;
     }
 
     /**
-     * @param urlDomain The url_domain
+     *
+     * @param urlDomain
+     * The url_domain
      */
     public void setUrlDomain(String urlDomain) {
         this.urlDomain = urlDomain;

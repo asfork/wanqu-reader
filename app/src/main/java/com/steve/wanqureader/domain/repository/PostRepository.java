@@ -16,5 +16,7 @@ public interface PostRepository {
 
     List<Post> fetchPostsList();
 
+    List<Post> fetchMorePostsList(Integer page);
+
     List<Post> fetchPostsByIssuesId();
 }

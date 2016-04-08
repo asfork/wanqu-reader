@@ -2,7 +2,9 @@ package com.steve.wanqureader.presentation.presenters.impl;
 
 import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
+import com.steve.wanqureader.domain.interactors.FetchMorePostsListInteractor;
 import com.steve.wanqureader.domain.interactors.FetchPostsListInteractor;
+import com.steve.wanqureader.domain.interactors.impl.FetchMorePostsListInteractorImpl;
 import com.steve.wanqureader.domain.interactors.impl.FetchPostsListInteractorImpl;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
@@ -15,7 +17,7 @@ import java.util.List;
  * Created by steve on 3/28/16.
  */
 public class MainPresenterImpl extends AbstractPresenter
-        implements MainPresenter, FetchPostsListInteractor.Callback {
+        implements MainPresenter, FetchPostsListInteractor.Callback, FetchMorePostsListInteractor.Callback {
 
     private MainPresenter.View mView;
     private PostRepository mPostRepository;
@@ -40,6 +42,24 @@ public class MainPresenterImpl extends AbstractPresenter
 
     @Override
     public void onPostsRetrieved(List<Post> posts) {
+        mView.showPosts(posts);
+        mView.onSetProgressBarVisibility(false);
+    }
+
+    @Override
+    public void fetchMorePostsList(Integer page) {
+        FetchMorePostsListInteractorImpl fetchMorePostsListInteractor = new FetchMorePostsListInteractorImpl(
+                mExecutor,
+                mMainThread,
+                page,
+                mPostRepository,
+                this
+        );
+        fetchMorePostsListInteractor.execute();
+    }
+
+    @Override
+    public void onMorePostsRetrieved(List<Post> posts) {
         mView.showPosts(posts);
         mView.onSetProgressBarVisibility(false);
     }

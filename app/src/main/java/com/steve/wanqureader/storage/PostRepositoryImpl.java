@@ -42,12 +42,12 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public List<Post> fetchPostsList() {
         WanquService wanqu = RestClient.getService(WanquService.class);
-        Call<List<Post>> call = wanqu.listPosts();
+        Call<List<Post>> call = wanqu.listPosts(null);
         try {
             List<Post> posts = call.execute().body();
             return posts;
         } catch (IOException e) {
-            Log.e(TAG, "", e);
+            Log.e(TAG, "fetch Posts List ", e);
         }
         return null;
     }

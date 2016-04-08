@@ -23,10 +23,11 @@ import butterknife.ButterKnife;
 /**
  * Created by steve on 3/22/16.
  */
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> implements RecyclerViewClickListener {
+public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>
+        implements RecyclerViewClickListener {
     private List<Post> mPostList;
     private Context mContext;
-    public final MainPresenter.View mView;
+    private final MainPresenter.View mView;
 
     public PostsAdapter(MainPresenter.View view, Context context) {
         mPostList = new ArrayList<>();
@@ -37,7 +38,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void refreshPosts(@NonNull List<Post> posts) {
         // clean up old data
         if (mPostList != null) {
-            mPostList.clear();
+            mPostList.addAll(posts);
         }
         mPostList = posts;
 
@@ -58,8 +59,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.domainView.setText(post.getUrlDomain());
         holder.dateView.setText(DateUtil.displayTime(post.getCreationDate()));
         holder.costsView.setText(String.format(readTime, post.getReadTimeMinutes()));
-        holder.titleView.setText(post.getReadableArticle());
-        holder.summaryView.setText(post.getReadableSummary());
+        holder.titleView.setText(post.getReadableTitle());
+        holder.summaryView.setText(post.getReadableArticle());
     }
 
     @Override
@@ -69,7 +70,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public void onClickView(int position) {
-        mView.onClickReadPost(mPostList.get(position));
+        mView.onClickReadPost(mPostList.get(position).getUrl(), mPostList.get(position).getSlug());
     }
 
     public final static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
