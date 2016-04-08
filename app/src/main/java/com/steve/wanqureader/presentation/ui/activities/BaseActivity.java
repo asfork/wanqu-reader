@@ -1,5 +1,7 @@
 package com.steve.wanqureader.presentation.ui.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -7,10 +9,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.steve.wanqureader.R;
+import com.steve.wanqureader.utils.Constant;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +25,8 @@ import io.realm.Realm;
  * Created by steve on 3/8/16.
  */
 public abstract class BaseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    private static String TAG = "BaseActivity";
     private Realm realm;
 
     @Bind(R.id.toolbar)
@@ -47,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
         init(savedInstanceState);
     }
 
@@ -83,8 +90,13 @@ public abstract class BaseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_about) {
+            AboutActivity.actionStart(this);
+        } else if (id == R.id.action_issues) {
+            Intent data = new Intent(Intent.ACTION_SENDTO);
+            data.setData(Uri.parse(Constant.ISSUES_EMAIL));
+            data.putExtra(Intent.EXTRA_SUBJECT, Constant.ISSUES_TITLE);
+            startActivity(data);
         }
 
         return super.onOptionsItemSelected(item);
@@ -96,17 +108,22 @@ public abstract class BaseActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_latest) {
+            MainActivity.actionStart(this);
+        } else if (id == R.id.nav_archives) {
+            FrontIssuesActivity.actionStart(this);
+        } else if (id == R.id.nav_likes) {
 
-        } else if (id == R.id.nav_archive) {
-
-        } else if (id == R.id.nav_like) {
-
-        } else if (id == R.id.nav_info) {
-
+        } else if (id == R.id.nav_about) {
+            AboutActivity.actionStart(this);
         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "switch clicked");
     }
 }
