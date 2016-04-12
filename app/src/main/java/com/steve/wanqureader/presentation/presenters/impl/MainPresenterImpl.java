@@ -6,6 +6,7 @@ import com.steve.wanqureader.domain.interactors.FetchMorePostsListInteractor;
 import com.steve.wanqureader.domain.interactors.FetchPostsListInteractor;
 import com.steve.wanqureader.domain.interactors.impl.FetchMorePostsListInteractorImpl;
 import com.steve.wanqureader.domain.interactors.impl.FetchPostsListInteractorImpl;
+import com.steve.wanqureader.domain.interactors.impl.StarPostInteractorImpl;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.presentation.presenters.MainPresenter;
@@ -17,7 +18,10 @@ import java.util.List;
  * Created by steve on 3/28/16.
  */
 public class MainPresenterImpl extends AbstractPresenter
-        implements MainPresenter, FetchPostsListInteractor.Callback, FetchMorePostsListInteractor.Callback {
+        implements MainPresenter,
+        FetchPostsListInteractor.Callback,
+        FetchMorePostsListInteractor.Callback,
+        StarPostInteractorImpl.Callback {
 
     private MainPresenter.View mView;
     private PostRepository mPostRepository;
@@ -47,7 +51,7 @@ public class MainPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void fetchMorePostsList(Integer page) {
+    public void fetchMorePostsList(int page) {
         FetchMorePostsListInteractorImpl fetchMorePostsListInteractor = new FetchMorePostsListInteractorImpl(
                 mExecutor,
                 mMainThread,
@@ -61,12 +65,25 @@ public class MainPresenterImpl extends AbstractPresenter
     @Override
     public void onMorePostsRetrieved(List<Post> posts) {
         mView.showPosts(posts);
-        mView.onSetProgressBarVisibility(false);
+        //TODO
+//        mView.onSetProgressBarVisibility(false);
     }
 
     @Override
-    public void likePost(Post post) {
+    public void starPost(Post post) {
+        StarPostInteractorImpl interactor = new StarPostInteractorImpl(
+                mExecutor,
+                mMainThread,
+                post,
+                mPostRepository,
+                this
+        );
+        interactor.execute();
+    }
 
+    @Override
+    public void onPostStarred() {
+        mView.onPostStarred();
     }
 
     @Override

@@ -35,12 +35,11 @@ public class FrontIssuesActivity extends BaseActivity
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, FrontIssuesActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
         containerView = View.inflate(this, R.layout.view_common_list, null);
         mSwipeRefreshLayout = (SwipeRefreshLayout) containerView.findViewById(R.id.swipe);
         mRecyclerView = (RecyclerView) containerView.findViewById(R.id.list);

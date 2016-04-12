@@ -23,7 +23,7 @@ public interface WanquService {
     Call<List<Post>> listPosts(@Query("page") Integer page);
 
     @GET("posts/{id}")
-    Call<List<Post>> postById(@Path("id") int postId);
+    Call<Post> postById(@Path("id") int postId);
 
     @GET("issues")
     Call<List<Issue>> listIssues(@Query("page") Integer page);
@@ -32,6 +32,6 @@ public interface WanquService {
     Call<List<Post>> postsByIssue(@Path("id") int issueId);
 
     @GET("tag/{id}")
-    Call<List<Tag>> tagById(@Path("id") int tagId);
+    Call<Tag> tagById(@Path("id") long tagId);
 }
 

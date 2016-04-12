@@ -1,6 +1,7 @@
 package com.steve.wanqureader.domain.repository;
 
 import com.steve.wanqureader.network.model.Post;
+import com.steve.wanqureader.storage.model.StarredPost;
 
 import java.util.List;
 
@@ -8,15 +9,17 @@ import java.util.List;
  * Created by steve on 3/28/16.
  */
 public interface PostRepository {
-    void like(Post post);
+    void insert(Post post);
 
-    void unlike(Post post);
+    void delete(StarredPost post);
 
-    Post fetchPostById(long id);
+    Post fetchPostByNum(int id);
 
     List<Post> fetchPostsList();
 
-    List<Post> fetchMorePostsList(Integer page);
+    List<Post> fetchMorePostsList(int page);
 
-    List<Post> fetchPostsByIssuesId();
+    List<StarredPost> getStarredPostsList();
+
+    StarredPost getStarredPostbyId(long id);
 }

@@ -10,6 +10,10 @@
     <dimen name="element_vertical_padding">16dp</dimen>
     <dimen name="element_horizontal_padding">16dp</dimen>
 
+    <dimen name="progress_view_width">40dp</dimen>
+    <dimen name="progress_view_height">40dp</dimen>
+
+
     <!--font size-->
     <dimen name="text_size_large">22sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>

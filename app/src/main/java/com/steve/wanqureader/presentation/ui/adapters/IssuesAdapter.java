@@ -77,7 +77,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
 
         @Bind(R.id.tv_title)
         TextView titleView;
-        @Bind(R.id.tv_summary)
+        @Bind(R.id.tv_article)
         TextView summaryView;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {

@@ -45,49 +45,35 @@
                     android:layout_gravity="start"
                     android:textSize="@dimen/text_size_vsmall" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_header_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_header_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/separator"/>
-
-                    <TextView
-                        android:id="@+id/tv_header_costs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-                </LinearLayout>
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="@dimen/text_size_vsmall" />
             </LinearLayout>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_post_bookmark_border_black_24dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_menu_grade_black_24dp"
                 android:tint="@color/red700"
-                android:background="@color/white" />
+                android:visibility="invisible" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/text_size_medium" />
 
         <TextView
-            android:id="@+id/tv_summary"
+            android:id="@+id/tv_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

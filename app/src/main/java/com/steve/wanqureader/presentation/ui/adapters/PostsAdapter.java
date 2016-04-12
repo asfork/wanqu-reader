@@ -54,13 +54,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Post post = mPostList.get(position);
-        String readTime = mContext.getResources().getString(R.string.read_time);
+        String info = mContext.getResources().getString(R.string.post_info);
 
         holder.domainView.setText(post.getUrlDomain());
-        holder.dateView.setText(DateUtil.displayTime(post.getCreationDate()));
-        holder.costsView.setText(String.format(readTime, post.getReadTimeMinutes()));
+        holder.infoView.setText(String.format(info,
+                DateUtil.displayTime(post.getCreationDate()),
+                post.getReadTimeMinutes()));
         holder.titleView.setText(post.getReadableTitle());
-        holder.summaryView.setText(post.getReadableArticle());
+        holder.articleView.setText(post.getReadableArticle());
     }
 
     @Override
@@ -80,12 +81,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>
         TextView domainView;
         @Bind(R.id.tv_title)
         TextView titleView;
-        @Bind(R.id.tv_summary)
-        TextView summaryView;
-        @Bind(R.id.tv_header_date)
-        TextView dateView;
-        @Bind(R.id.tv_header_costs)
-        TextView costsView;
+        @Bind(R.id.tv_article)
+        TextView articleView;
+        @Bind(R.id.tv_header_info)
+        TextView infoView;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {
             super(view);

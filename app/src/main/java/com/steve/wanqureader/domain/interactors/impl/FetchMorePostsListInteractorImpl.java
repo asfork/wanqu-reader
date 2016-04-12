@@ -15,10 +15,11 @@ import java.util.List;
 public class FetchMorePostsListInteractorImpl extends AbstractInteractor implements FetchMorePostsListInteractor {
     private FetchMorePostsListInteractor.Callback mCallback;
     private PostRepository mPostRepository;
-    private Integer mPage;
+    private int mPage;
 
-    public FetchMorePostsListInteractorImpl(Executor threadExecutor, MainThread mainThread, Integer page,
-                                            PostRepository postRepository, FetchMorePostsListInteractor.Callback callback) {
+    public FetchMorePostsListInteractorImpl(Executor threadExecutor, MainThread mainThread,
+                                            int page, PostRepository postRepository,
+                                            FetchMorePostsListInteractor.Callback callback) {
         super(threadExecutor, mainThread);
 
         if (postRepository == null || callback == null) {

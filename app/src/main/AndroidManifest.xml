@@ -11,18 +11,38 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="wanqu.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.steve.wanqureader.storage.model" />
+
         <activity
             android:name=".presentation.ui.activities.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.activities.WebviewActivity" />
-        <activity android:name=".presentation.ui.activities.AboutActivity" />
-        <activity android:name=".presentation.ui.activities.FrontIssuesActivity" />
+        <activity
+            android:name=".presentation.ui.activities.WebViewActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".presentation.ui.activities.FrontIssuesActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".presentation.ui.activities.StarredActivity"
+            android:launchMode="singleTask" />
     </application>
-
 </manifest>

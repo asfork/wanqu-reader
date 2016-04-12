@@ -17,14 +17,14 @@ public interface MainPresenter extends BasePresenter {
 
         void onClickReadPost(String url, String slug);
 
-        void onClickLikePost(Post post);
+        void onClickStarPost(Post post);
 
-        void onPostLiked(Post post);
+        void onPostStarred();
     }
 
     void fetchPostsList();
 
-    void fetchMorePostsList(Integer page);
+    void fetchMorePostsList(int page);
 
-    void likePost(Post post);
+    void starPost(Post post);
 }

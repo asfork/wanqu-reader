@@ -6,6 +6,7 @@ import android.util.Log;
 import com.steve.wanqureader.domain.repository.IssueRepository;
 import com.steve.wanqureader.network.RestClient;
 import com.steve.wanqureader.network.model.Issue;
+import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.network.services.WanquService;
 
 import java.io.IOException;
@@ -19,25 +20,31 @@ import retrofit2.Call;
 public class IssueRepositoryImpl implements IssueRepository {
     private static String TAG = "IssueRepositoryImpl";
     private Context mContext;
+    private WanquService wanqu;
 
     public IssueRepositoryImpl(Context context) {
         mContext = context;
+        wanqu = RestClient.getService(WanquService.class);
     }
 
     @Override
-    public Issue fetchIssueById(long id) {
+    public List<Post> fetchPostsByIssueNum(int id) {
+        Call<List<Post>> call = wanqu.postsByIssue(id);
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            Log.e(TAG, "fetch posts by issues number ", e);
+        }
         return null;
     }
 
     @Override
     public List<Issue> fetchIssuesList() {
-        WanquService wanqu = RestClient.getService(WanquService.class);
-        Call<List<Issue>> call = wanqu.listIssues();
+        Call<List<Issue>> call = wanqu.listIssues(null);
         try {
-            List<Issue> issues = call.execute().body();
-            return issues;
+            return call.execute().body();
         } catch (IOException e) {
-            Log.e(TAG, "fetch Issues List ", e);
+            Log.e(TAG, "fetch issues list ", e);
         }
         return null;
     }

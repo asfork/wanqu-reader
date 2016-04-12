@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_latest"
+            android:icon="@drawable/ic_menu_home_black_24dp"
+            android:title="@string/nav_latest"
+            android:checked="true" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_archives"
+            android:icon="@drawable/ic_menu_archive_black_24dp"
+            android:title="@string/nav_archives" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_likes"
+            android:icon="@drawable/ic_menu_grade_black_24dp"
+            android:title="@string/nav_likes" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/nav_settings">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_switch"
+                android:icon="@drawable/ic_menu_sleep_black_24dp"
+                android:title="@string/nav_sleep_mode" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about_black_24dp"
+                android:title="@string/nav_about" />
         </menu>
     </item>
 

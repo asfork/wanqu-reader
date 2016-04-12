@@ -15,14 +15,14 @@ import android.widget.FrameLayout;
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.domain.executor.impl.ThreadExecutor;
 import com.steve.wanqureader.network.model.Post;
-import com.steve.wanqureader.presentation.CustomTabActivityHelper;
-import com.steve.wanqureader.presentation.WebviewFallback;
 import com.steve.wanqureader.presentation.presenters.MainPresenter;
 import com.steve.wanqureader.presentation.presenters.impl.MainPresenterImpl;
 import com.steve.wanqureader.presentation.ui.adapters.PostsAdapter;
 import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.threading.MainThreadImpl;
+import com.steve.wanqureader.utils.CustomTabActivityHelper;
 import com.steve.wanqureader.utils.SnackbarUtil;
+import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.List;
 
@@ -33,15 +33,15 @@ public class MainActivity extends BaseActivity
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private View containerView;
+    private LinearLayoutManager mLinearLayoutManager;
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
         containerView = View.inflate(this, R.layout.view_common_list, null);
         mSwipeRefreshLayout = (SwipeRefreshLayout) containerView.findViewById(R.id.swipe);
         mRecyclerView = (RecyclerView) containerView.findViewById(R.id.list);
@@ -60,7 +60,8 @@ public class MainActivity extends BaseActivity
 
         mAdapter = new PostsAdapter(this, this);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         // allows for optimizations if all items are of the same size
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -100,13 +101,13 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void onClickLikePost(Post post) {
-
+    public void onClickStarPost(Post post) {
+        mMainPresenter.starPost(post);
     }
 
     @Override
-    public void onPostLiked(Post post) {
-
+    public void onPostStarred() {
+        //TODO
     }
 
     @Override

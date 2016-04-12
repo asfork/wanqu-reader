@@ -30,13 +30,14 @@ public class WebViewActivity extends AppCompatActivity {
     private LinearLayout mLinearLayout;
     private WebView mWebView;
     private String url;
+    private String title;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    public static void actionStart(Context context, String url) {
+    public static void actionStart(Context context, String title, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(Constant.EXTRA_TITLE, title);
         intent.putExtra(Constant.EXTRA_URL, url);
         context.startActivity(intent);
     }
@@ -47,9 +48,10 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
 
+        title = getIntent().getStringExtra(Constant.EXTRA_TITLE);
         url = getIntent().getStringExtra(Constant.EXTRA_URL);
 
-        toolbar.setTitle(getString(R.string.activity_about));
+        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         // back to home
         assert getSupportActionBar() != null;

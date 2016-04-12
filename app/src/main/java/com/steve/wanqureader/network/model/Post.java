@@ -295,5 +295,4 @@ public class Post {
     public void setUrlDomain(String urlDomain) {
         this.urlDomain = urlDomain;
     }
-
 }
