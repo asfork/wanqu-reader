@@ -7,7 +7,7 @@ import com.steve.wanqureader.domain.interactors.base.AbstractInteractor;
 import com.steve.wanqureader.domain.repository.IssueRepository;
 import com.steve.wanqureader.network.model.Issue;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 4/6/16.
@@ -30,7 +30,7 @@ public class FetchIssuesListInteractorImpl extends AbstractInteractor
 
     @Override
     public void run() {
-        final List<Issue> issues = mIssueRepository.fetchIssuesList();
+        final ArrayList<Issue> issues = mIssueRepository.fetchIssuesList();
         mMainThread.post(new Runnable() {
             @Override
             public void run() {

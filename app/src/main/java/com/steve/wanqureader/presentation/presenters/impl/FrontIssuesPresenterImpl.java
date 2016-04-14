@@ -9,7 +9,7 @@ import com.steve.wanqureader.network.model.Issue;
 import com.steve.wanqureader.presentation.presenters.FrontIssuesPresenter;
 import com.steve.wanqureader.presentation.presenters.base.AbstractPresenter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 4/6/16.
@@ -38,9 +38,9 @@ public class FrontIssuesPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void onIssuesRetrieved(List<Issue> issues) {
+    public void onIssuesRetrieved(ArrayList<Issue> issues) {
         mView.showIssues(issues);
-        mView.onSetProgressBarVisibility(false);
+        mView.onSetProgressBarVisibility(1);
     }
 
     @Override

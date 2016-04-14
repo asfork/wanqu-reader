@@ -4,16 +4,18 @@ import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.presentation.presenters.base.BasePresenter;
 import com.steve.wanqureader.presentation.ui.BaseView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 3/28/16.
  */
-public interface MainPresenter extends BasePresenter {
+public interface PostsPresenter extends BasePresenter {
 
     interface View extends BaseView {
 
-        void showPosts(List<Post> posts);
+        void showPosts(ArrayList<Post> posts);
+
+        void showMorePosts(ArrayList<Post> posts);
 
         void onClickReadPost(String url, String slug);
 

@@ -4,7 +4,7 @@ import com.steve.wanqureader.network.model.Issue;
 import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.network.model.Tag;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,16 +20,16 @@ import retrofit2.http.Query;
 
 public interface WanquService {
     @GET("posts")
-    Call<List<Post>> listPosts(@Query("page") Integer page);
+    Call<ArrayList<Post>> listPosts(@Query("page") Integer page);
 
     @GET("posts/{id}")
     Call<Post> postById(@Path("id") int postId);
 
     @GET("issues")
-    Call<List<Issue>> listIssues(@Query("page") Integer page);
+    Call<ArrayList<Issue>> listIssues(@Query("page") Integer page);
 
     @GET("issue/{id}")
-    Call<List<Post>> postsByIssue(@Path("id") int issueId);
+    Call<ArrayList<Post>> postsByIssue(@Path("id") int issueId);
 
     @GET("tag/{id}")
     Call<Tag> tagById(@Path("id") long tagId);

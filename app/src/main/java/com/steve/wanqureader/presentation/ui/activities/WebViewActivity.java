@@ -7,11 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.steve.wanqureader.R;
@@ -25,15 +23,15 @@ import butterknife.ButterKnife;
  */
 public class WebViewActivity extends AppCompatActivity {
     private static final String TAG = "WebViewActivity";
-
-    private View containerView;
-    private LinearLayout mLinearLayout;
-    private WebView mWebView;
     private String url;
     private String title;
 
+    @Bind(R.id.linear_layout)
+    LinearLayout mLinearLayout;
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
+    @Bind(R.id.web_view)
+    WebView mWebView;
 
     public static void actionStart(Context context, String title, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -51,18 +49,11 @@ public class WebViewActivity extends AppCompatActivity {
         title = getIntent().getStringExtra(Constant.EXTRA_TITLE);
         url = getIntent().getStringExtra(Constant.EXTRA_URL);
 
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
+        mToolbar.setTitle(title);
+        setSupportActionBar(mToolbar);
         // back to home
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        containerView = View.inflate(this, R.layout.view_web, null);
-        mLinearLayout = (LinearLayout) containerView.findViewById(R.id.linear_layout);
-        mWebView = (WebView) containerView.findViewById(R.id.web_view);
-        FrameLayout parentsView = (FrameLayout) findViewById(R.id.frame_layout);
-        if (parentsView == null) return;
-        parentsView.addView(containerView);
 
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {

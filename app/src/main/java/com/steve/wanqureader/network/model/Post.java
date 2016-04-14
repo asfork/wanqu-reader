@@ -1,14 +1,15 @@
 package com.steve.wanqureader.network.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class Post {
-
+public class Post implements Parcelable {
     @SerializedName("creation_date")
     @Expose
     private String creationDate;
@@ -41,7 +42,7 @@ public class Post {
     private String summary;
     @SerializedName("tags")
     @Expose
-    private List<Integer> tags = new ArrayList<Integer>();
+    private ArrayList<Integer> tags = new ArrayList<Integer>();
     @SerializedName("title")
     @Expose
     private String title;
@@ -52,247 +53,171 @@ public class Post {
     @Expose
     private String urlDomain;
 
-    /**
-     *
-     * @return
-     * The creationDate
-     */
     public String getCreationDate() {
         return creationDate;
     }
 
-    /**
-     *
-     * @param creationDate
-     * The creation_date
-     */
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
-    /**
-     *
-     * @return
-     * The id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id The id
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return The issue
-     */
     public Integer getIssue() {
         return issue;
     }
 
-    /**
-     *
-     * @param issue
-     * The issue
-     */
     public void setIssue(Integer issue) {
         this.issue = issue;
     }
 
-    /**
-     *
-     * @return
-     * The postNo
-     */
     public Integer getPostNo() {
         return postNo;
     }
 
-    /**
-     *
-     * @param postNo
-     * The post_no
-     */
     public void setPostNo(Integer postNo) {
         this.postNo = postNo;
     }
 
-    /**
-     *
-     * @return
-     * The readTimeMinutes
-     */
     public Integer getReadTimeMinutes() {
         return readTimeMinutes;
     }
 
-    /**
-     *
-     * @param readTimeMinutes
-     * The read_time_minutes
-     */
     public void setReadTimeMinutes(Integer readTimeMinutes) {
         this.readTimeMinutes = readTimeMinutes;
     }
 
-    /**
-     *
-     * @return
-     * The readableArticle
-     */
     public String getReadableArticle() {
         return readableArticle;
     }
 
-    /**
-     *
-     * @param readableArticle
-     * The readable_article
-     */
     public void setReadableArticle(String readableArticle) {
         this.readableArticle = readableArticle;
     }
 
-    /**
-     *
-     * @return
-     * The readableSummary
-     */
     public String getReadableSummary() {
         return readableSummary;
     }
 
-    /**
-     *
-     * @param readableSummary
-     * The readable_summary
-     */
     public void setReadableSummary(String readableSummary) {
         this.readableSummary = readableSummary;
     }
 
-    /**
-     *
-     * @return
-     * The readableTitle
-     */
     public String getReadableTitle() {
         return readableTitle;
     }
 
-    /**
-     * @param readableTitle The readable_title
-     */
     public void setReadableTitle(String readableTitle) {
         this.readableTitle = readableTitle;
     }
 
-    /**
-     * @return The slug
-     */
     public String getSlug() {
         return slug;
     }
 
-    /**
-     *
-     * @param slug
-     * The slug
-     */
     public void setSlug(String slug) {
         this.slug = slug;
     }
 
-    /**
-     *
-     * @return
-     * The summary
-     */
     public String getSummary() {
         return summary;
     }
 
-    /**
-     *
-     * @param summary
-     * The summary
-     */
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
-    /**
-     *
-     * @return
-     * The tags
-     */
-    public List<Integer> getTags() {
+    public ArrayList<Integer> getTags() {
         return tags;
     }
 
-    /**
-     *
-     * @param tags
-     * The tags
-     */
-    public void setTags(List<Integer> tags) {
+    public void setTags(ArrayList<Integer> tags) {
         this.tags = tags;
     }
 
-    /**
-     *
-     * @return
-     * The title
-     */
     public String getTitle() {
         return title;
     }
 
-    /**
-     *
-     * @param title
-     * The title
-     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     *
-     * @return
-     * The url
-     */
     public String getUrl() {
         return url;
     }
 
-    /**
-     *
-     * @param url
-     * The url
-     */
     public void setUrl(String url) {
         this.url = url;
     }
 
-    /**
-     *
-     * @return
-     * The urlDomain
-     */
     public String getUrlDomain() {
         return urlDomain;
     }
 
-    /**
-     *
-     * @param urlDomain
-     * The url_domain
-     */
     public void setUrlDomain(String urlDomain) {
         this.urlDomain = urlDomain;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.creationDate);
+        dest.writeValue(this.id);
+        dest.writeValue(this.issue);
+        dest.writeValue(this.postNo);
+        dest.writeValue(this.readTimeMinutes);
+        dest.writeString(this.readableArticle);
+        dest.writeString(this.readableSummary);
+        dest.writeString(this.readableTitle);
+        dest.writeString(this.slug);
+        dest.writeString(this.summary);
+        dest.writeList(this.tags);
+        dest.writeString(this.title);
+        dest.writeString(this.url);
+        dest.writeString(this.urlDomain);
+    }
+
+    public Post() {
+    }
+
+    protected Post(Parcel in) {
+        this.creationDate = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.issue = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.postNo = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.readTimeMinutes = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.readableArticle = in.readString();
+        this.readableSummary = in.readString();
+        this.readableTitle = in.readString();
+        this.slug = in.readString();
+        this.summary = in.readString();
+        this.tags = new ArrayList<Integer>();
+        in.readList(this.tags, Integer.class.getClassLoader());
+        this.title = in.readString();
+        this.url = in.readString();
+        this.urlDomain = in.readString();
+    }
+
+    public static final Parcelable.Creator<Post> CREATOR = new Parcelable.Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel source) {
+            return new Post(source);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 }

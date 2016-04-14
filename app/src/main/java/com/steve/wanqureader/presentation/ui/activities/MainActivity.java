@@ -1,122 +1,161 @@
 package com.steve.wanqureader.presentation.ui.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.steve.wanqureader.R;
-import com.steve.wanqureader.domain.executor.impl.ThreadExecutor;
-import com.steve.wanqureader.network.model.Post;
-import com.steve.wanqureader.presentation.presenters.MainPresenter;
-import com.steve.wanqureader.presentation.presenters.impl.MainPresenterImpl;
-import com.steve.wanqureader.presentation.ui.adapters.PostsAdapter;
-import com.steve.wanqureader.storage.PostRepositoryImpl;
-import com.steve.wanqureader.threading.MainThreadImpl;
-import com.steve.wanqureader.utils.CustomTabActivityHelper;
-import com.steve.wanqureader.utils.SnackbarUtil;
-import com.steve.wanqureader.utils.WebviewFallback;
+import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
+import com.steve.wanqureader.presentation.ui.fragments.RandomPostFragment;
+import com.steve.wanqureader.presentation.ui.fragments.StarredFragment;
+import com.steve.wanqureader.utils.Constant;
 
-import java.util.List;
+import butterknife.Bind;
 
 public class MainActivity extends BaseActivity
-        implements MainPresenter.View, SwipeRefreshLayout.OnRefreshListener {
-    private PostsAdapter mAdapter;
-    private MainPresenter mMainPresenter;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private View containerView;
-    private LinearLayoutManager mLinearLayoutManager;
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    private static String TAG = "MainActivity";
+    private Fragment mFragment;
 
-    public static void actionStart(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+    @Bind(R.id.nav_view)
+    NavigationView mNavView;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_main;
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        containerView = View.inflate(this, R.layout.view_common_list, null);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) containerView.findViewById(R.id.swipe);
-        mRecyclerView = (RecyclerView) containerView.findViewById(R.id.list);
+        // First time init, create the UI.
+        if (savedInstanceState == null) {
+            mFragment = new PostsFragment();
+            getSupportFragmentManager().beginTransaction().add(
+                    R.id.frame_layout,
+                    mFragment,
+                    Constant.TAG_FRAGMENT_POSTS
+            ).commit();
+        }
 
-        FrameLayout parentsView = (FrameLayout) findViewById(R.id.frame_layout);
-        if (parentsView == null) return;
-        parentsView.addView(containerView);
+        setSupportActionBar(mToolbar);
 
-        mSwipeRefreshLayout.setColorSchemeResources(
-                R.color.blue700,
-                R.color.green700,
-                R.color.red700,
-                R.color.orange700
-        );
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-        mAdapter = new PostsAdapter(this, this);
-
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        // allows for optimizations if all items are of the same size
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mRecyclerView.setAdapter(mAdapter);
-
-        // instantiate the presenter
-        mMainPresenter = new MainPresenterImpl(
-                ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(),
-                this,
-                new PostRepositoryImpl(this)
-        );
+        mNavView.setNavigationItemSelectedListener(this);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mMainPresenter.resume();
+    public void onBackPressed() {
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
-    public void onRefresh() {
-        mMainPresenter.fetchPostsList();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
     @Override
-    public void showPosts(List<Post> posts) {
-        mAdapter.refreshPosts(posts);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_about) {
+            WebViewActivity.actionStart(this, getString(R.string.activity_about), Constant.ABOUT_URL);
+        } else if (id == R.id.action_issues) {
+            Intent data = new Intent(Intent.ACTION_SENDTO);
+            data.setData(Uri.parse(Constant.ISSUES_EMAIL));
+            data.putExtra(Intent.EXTRA_SUBJECT, Constant.ISSUES_TITLE);
+            startActivity(data);
+        } else if (id == R.id.action_search) {
+            Log.d("BaseActivity", "search");
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_latest) {
+            switchContent(PostsFragment.class);
+            // Highlight the selected item has been done by NavigationView
+            item.setChecked(true);
+            // Set action bar title
+            setTitle(item.getTitle());
+
+        } else if (id == R.id.nav_archives) {
+            switchContent(RandomPostFragment.class);
+            item.setChecked(true);
+            setTitle(item.getTitle());
+
+        } else if (id == R.id.nav_likes) {
+            switchContent(StarredFragment.class);
+            item.setChecked(true);
+            setTitle(item.getTitle());
+
+        } else if (id == R.id.nav_about) {
+            WebViewActivity.actionStart(this, getString(R.string.activity_about), Constant.ABOUT_URL);
+        }
+
+        mDrawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
-    public void onClickReadPost(String url, String slug) {
-        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
-        CustomTabActivityHelper.openCustomTab(this, customTabsIntent,
-                Uri.parse(url), new WebviewFallback());
+    public void onClick(View v) {
+        Log.d(TAG, "switch theme clicked");
     }
 
-    @Override
-    public void onClickStarPost(Post post) {
-        mMainPresenter.starPost(post);
-    }
-
-    @Override
-    public void onPostStarred() {
-        //TODO
-    }
-
-    @Override
-    public void onSetProgressBarVisibility(boolean visibility) {
-        mSwipeRefreshLayout.setRefreshing(visibility);
-    }
-
-    @Override
-    public void onError(String message) {
-        SnackbarUtil.show(containerView, message, 0);
+    private void switchContent(Class fragmentClass) {
+        Fragment frontFragment, nextFragment;
+        try {
+            nextFragment = (Fragment) fragmentClass.newInstance();
+            if (mFragment != nextFragment) {
+                frontFragment = mFragment;
+                mFragment = nextFragment;
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (!nextFragment.isAdded()) {    // 先判断是否被add过
+                    // 隐藏当前的fragment，add下一个到Activity中
+                    fragmentManager.beginTransaction().hide(frontFragment).add(R.id.frame_layout, nextFragment).commit();
+                    Log.d(TAG, "switch next fragment");
+                } else {
+                    // 隐藏当前的fragment，显示下一个
+                    fragmentManager.beginTransaction().hide(frontFragment).show(nextFragment).commit();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

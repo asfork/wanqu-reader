@@ -3,7 +3,7 @@ package com.steve.wanqureader.domain.interactors;
 import com.steve.wanqureader.domain.interactors.base.Interactor;
 import com.steve.wanqureader.network.model.Post;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 3/28/16.
@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface FetchPostsListInteractor extends Interactor {
     interface Callback {
-        void onPostsRetrieved(List<Post> posts);
+        void onPostsRetrieved(ArrayList<Post> posts);
     }
 }

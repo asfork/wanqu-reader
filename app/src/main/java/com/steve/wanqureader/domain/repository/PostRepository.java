@@ -3,6 +3,7 @@ package com.steve.wanqureader.domain.repository;
 import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.storage.model.StarredPost;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,9 +16,9 @@ public interface PostRepository {
 
     Post fetchPostByNum(int id);
 
-    List<Post> fetchPostsList();
+    ArrayList<Post> fetchPostsList();
 
-    List<Post> fetchMorePostsList(int page);
+    ArrayList<Post> fetchMorePostsList(int page);
 
     List<StarredPost> getStarredPostsList();
 

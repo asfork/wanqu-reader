@@ -11,6 +11,7 @@ import com.steve.wanqureader.storage.converters.StorageModelConverter;
 import com.steve.wanqureader.storage.model.StarredPost;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,8 +47,9 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public List<StarredPost> getStarredPostsList() {
-        return StarredPost.findWithQuery(StarredPost.class,
-                "SELECT * FROM StarredPost ORDER BY starred_date DESC", null);
+//        return StarredPost.findWithQuery(StarredPost.class,
+//                "SELECT * FROM STARRED_POST ORDER BY STARREDDATE DESC", null);
+        return StarredPost.find(StarredPost.class, null, null, null, "STARREDDATE DESC", null);
     }
 
     @Override
@@ -62,19 +64,19 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> fetchPostsList() {
-        Call<List<Post>> call = wanqu.listPosts(null);
+    public ArrayList<Post> fetchPostsList() {
+        Call<ArrayList<Post>> call = wanqu.listPosts(null);
         try {
             return call.execute().body();
         } catch (IOException e) {
-            Log.e(TAG, "fetch posts list ", e);
+            Log.e(TAG, "fetch posts ArrayList ", e);
         }
         return null;
     }
 
     @Override
-    public List<Post> fetchMorePostsList(int page) {
-        Call<List<Post>> call = wanqu.listPosts(page);
+    public ArrayList<Post> fetchMorePostsList(int page) {
+        Call<ArrayList<Post>> call = wanqu.listPosts(page);
         try {
             return call.execute().body();
         } catch (IOException e) {

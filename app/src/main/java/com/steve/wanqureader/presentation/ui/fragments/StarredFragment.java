@@ -1,16 +1,12 @@
-package com.steve.wanqureader.presentation.ui.activities;
+package com.steve.wanqureader.presentation.ui.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.domain.executor.impl.ThreadExecutor;
@@ -21,50 +17,34 @@ import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.storage.model.StarredPost;
 import com.steve.wanqureader.threading.MainThreadImpl;
 import com.steve.wanqureader.utils.CustomTabActivityHelper;
+import com.steve.wanqureader.utils.SnackbarUtil;
 import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
- * Created by steve on 4/8/16.
+ * Created by steve on 3/22/16.
  */
-public class StarredActivity extends AppCompatActivity implements StarredPresenter.View {
-    private static String TAG = "StarredActivity";
+public class StarredFragment extends BaseFragment implements StarredPresenter.View {
+    private static String TAG = "StarredFragment";
     private StarredPostsAdapter mAdapter;
     private StarredPresenter mStarredPresenter;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    public static void actionStart(Context context) {
-        Intent intent = new Intent(context, WebViewActivity.class);
-        context.startActivity(intent);
+    @Override
+    public int getContentViewId() {
+        return R.layout.fragment_starred;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_starred);
+    protected void initView(Bundle savedInstanceState) {
+        mAdapter = new StarredPostsAdapter(this, mContext);
 
-        ButterKnife.bind(this);
-
-        initView();
-    }
-
-    private void initView() {
-        setSupportActionBar(mToolbar);
-        // back to home
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mAdapter = new StarredPostsAdapter(this, this);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         // allows for optimizations if all items are of the same size
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -76,13 +56,13 @@ public class StarredActivity extends AppCompatActivity implements StarredPresent
                 ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(),
                 this,
-                new PostRepositoryImpl(this)
+                new PostRepositoryImpl(mContext)
         );
         mStarredPresenter.fetchStarredPostsList();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         mStarredPresenter.resume();
     }
@@ -95,7 +75,7 @@ public class StarredActivity extends AppCompatActivity implements StarredPresent
     @Override
     public void onClickReadStarredPost(String url, String slug) {
         CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
-        CustomTabActivityHelper.openCustomTab(this, customTabsIntent,
+        CustomTabActivityHelper.openCustomTab(getActivity(), customTabsIntent,
                 Uri.parse(url), new WebviewFallback());
     }
 
@@ -106,7 +86,7 @@ public class StarredActivity extends AppCompatActivity implements StarredPresent
 
     @Override
     public void onPostUnstarred(StarredPost post) {
-        //TODO
+        Log.d(TAG, "Post Unstarred");
     }
 
     @Override
@@ -116,6 +96,6 @@ public class StarredActivity extends AppCompatActivity implements StarredPresent
 
     @Override
     public void onError(String message) {
-
+        SnackbarUtil.show(mRecyclerView, message, 0);
     }
 }

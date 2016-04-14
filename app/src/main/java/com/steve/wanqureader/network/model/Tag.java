@@ -1,9 +1,12 @@
 package com.steve.wanqureader.network.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Tag {
+public class Tag implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -12,32 +15,50 @@ public class Tag {
     @Expose
     private String tag;
 
-    /**
-     * @return The id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id The id
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return The tag
-     */
     public String getTag() {
         return tag;
     }
 
-    /**
-     * @param tag The tag
-     */
     public void setTag(String tag) {
         this.tag = tag;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.tag);
+    }
+
+    public Tag() {
+    }
+
+    protected Tag(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tag = in.readString();
+    }
+
+    public static final Parcelable.Creator<Tag> CREATOR = new Parcelable.Creator<Tag>() {
+        @Override
+        public Tag createFromParcel(Parcel source) {
+            return new Tag(source);
+        }
+
+        @Override
+        public Tag[] newArray(int size) {
+            return new Tag[size];
+        }
+    };
 }

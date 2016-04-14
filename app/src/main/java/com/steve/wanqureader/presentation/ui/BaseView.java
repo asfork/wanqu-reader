@@ -11,7 +11,7 @@ public interface BaseView {
      * This is a general method used for showing some kind of progress or hiding progress information during a background task. For example, this
      * method should show a progress bar and/or disable buttons before some background work starts.
      */
-    void onSetProgressBarVisibility(boolean visibility);
+    void onSetProgressBarVisibility(int statusCode);
 
     /**
      * This method is used for showing error messages on the UI.

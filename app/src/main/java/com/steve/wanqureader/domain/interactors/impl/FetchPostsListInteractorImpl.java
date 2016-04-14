@@ -7,7 +7,7 @@ import com.steve.wanqureader.domain.interactors.base.AbstractInteractor;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 3/28/16.
@@ -34,7 +34,7 @@ public class FetchPostsListInteractorImpl extends AbstractInteractor implements 
     @Override
     public void run() {
         // retrieve the posts from the disk or network
-        final List<Post> posts = mPostRepository.fetchPostsList();
+        final ArrayList<Post> posts = mPostRepository.fetchPostsList();
 
         // show posts on the main thread
         mMainThread.post(new Runnable() {

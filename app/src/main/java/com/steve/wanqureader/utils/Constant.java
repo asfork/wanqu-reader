@@ -17,6 +17,11 @@ public class Constant {
     public static final String ISSUES_EMAIL = "mailto:stevzhg+wanqu@gmail.com";
     public static final String ISSUES_TITLE = "Wanqu Reader Issues";
 
+    public static final int PROGRESS_HEADER_INVISIBILITY = 1;
+    public static final int PROGRESS_FOOTER_INVISIBILITY = 2;
+
     public static final int CACHE_TIME = 5 * 60; //cache for 5 minute
     public static final int CACHE_SIZE = 10 * 1024 * 1024;
+
+    public static final String TAG_FRAGMENT_POSTS = "PostsFragment";
 }

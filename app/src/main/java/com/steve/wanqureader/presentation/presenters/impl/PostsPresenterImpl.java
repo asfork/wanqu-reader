@@ -9,25 +9,26 @@ import com.steve.wanqureader.domain.interactors.impl.FetchPostsListInteractorImp
 import com.steve.wanqureader.domain.interactors.impl.StarPostInteractorImpl;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
-import com.steve.wanqureader.presentation.presenters.MainPresenter;
+import com.steve.wanqureader.presentation.presenters.PostsPresenter;
 import com.steve.wanqureader.presentation.presenters.base.AbstractPresenter;
+import com.steve.wanqureader.utils.Constant;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 3/28/16.
  */
-public class MainPresenterImpl extends AbstractPresenter
-        implements MainPresenter,
+public class PostsPresenterImpl extends AbstractPresenter
+        implements PostsPresenter,
         FetchPostsListInteractor.Callback,
         FetchMorePostsListInteractor.Callback,
         StarPostInteractorImpl.Callback {
 
-    private MainPresenter.View mView;
+    private PostsPresenter.View mView;
     private PostRepository mPostRepository;
 
-    public MainPresenterImpl(Executor executor, MainThread mainThread,
-                             View view, PostRepository postRepository) {
+    public PostsPresenterImpl(Executor executor, MainThread mainThread,
+                              View view, PostRepository postRepository) {
         super(executor, mainThread);
         mView = view;
         mPostRepository = postRepository;
@@ -45,9 +46,9 @@ public class MainPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void onPostsRetrieved(List<Post> posts) {
+    public void onPostsRetrieved(ArrayList<Post> posts) {
         mView.showPosts(posts);
-        mView.onSetProgressBarVisibility(false);
+        mView.onSetProgressBarVisibility(Constant.PROGRESS_HEADER_INVISIBILITY);
     }
 
     @Override
@@ -63,10 +64,9 @@ public class MainPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void onMorePostsRetrieved(List<Post> posts) {
-        mView.showPosts(posts);
-        //TODO
-//        mView.onSetProgressBarVisibility(false);
+    public void onMorePostsRetrieved(ArrayList<Post> posts) {
+        mView.showMorePosts(posts);
+        mView.onSetProgressBarVisibility(Constant.PROGRESS_FOOTER_INVISIBILITY);
     }
 
     @Override

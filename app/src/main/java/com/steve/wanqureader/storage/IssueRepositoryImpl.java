@@ -10,7 +10,7 @@ import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.network.services.WanquService;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 
@@ -28,8 +28,8 @@ public class IssueRepositoryImpl implements IssueRepository {
     }
 
     @Override
-    public List<Post> fetchPostsByIssueNum(int id) {
-        Call<List<Post>> call = wanqu.postsByIssue(id);
+    public ArrayList<Post> fetchPostsByIssueNum(int id) {
+        Call<ArrayList<Post>> call = wanqu.postsByIssue(id);
         try {
             return call.execute().body();
         } catch (IOException e) {
@@ -39,8 +39,8 @@ public class IssueRepositoryImpl implements IssueRepository {
     }
 
     @Override
-    public List<Issue> fetchIssuesList() {
-        Call<List<Issue>> call = wanqu.listIssues(null);
+    public ArrayList<Issue> fetchIssuesList() {
+        Call<ArrayList<Issue>> call = wanqu.listIssues(null);
         try {
             return call.execute().body();
         } catch (IOException e) {
