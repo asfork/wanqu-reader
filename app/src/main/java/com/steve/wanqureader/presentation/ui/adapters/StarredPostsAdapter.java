@@ -47,7 +47,7 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_starred_post, parent, false);
         return new ViewHolder(view, this);
     }
 
