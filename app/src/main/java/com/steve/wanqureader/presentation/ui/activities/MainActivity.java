@@ -16,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.steve.wanqureader.R;
+import com.steve.wanqureader.presentation.ui.fragments.FrontIssuesFragment;
 import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
-import com.steve.wanqureader.presentation.ui.fragments.RandomPostFragment;
 import com.steve.wanqureader.presentation.ui.fragments.StarredFragment;
 import com.steve.wanqureader.utils.Constant;
 
@@ -26,7 +26,10 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static String TAG = "MainActivity";
-    private Fragment mFragment;
+    private PostsFragment mPostFragment;
+    private StarredFragment mStarredFragment;
+    private FrontIssuesFragment mFrontIssuesFragment;
+    private Fragment curFragment;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -44,10 +47,11 @@ public class MainActivity extends BaseActivity
     protected void initView(Bundle savedInstanceState) {
         // First time init, create the UI.
         if (savedInstanceState == null) {
-            mFragment = new PostsFragment();
+            mPostFragment = new PostsFragment();
+            curFragment = mPostFragment;
             getSupportFragmentManager().beginTransaction().add(
                     R.id.frame_layout,
-                    mFragment,
+                    mPostFragment,
                     Constant.TAG_FRAGMENT_POSTS
             ).commit();
         }
@@ -107,25 +111,37 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_latest) {
-            switchContent(PostsFragment.class);
-            // Highlight the selected item has been done by NavigationView
-            item.setChecked(true);
-            // Set action bar title
-            setTitle(item.getTitle());
+            if (mPostFragment != null) {
+                switchContent(mPostFragment);
+            } else {
+                mPostFragment = new PostsFragment();
+                switchContent(mPostFragment);
+            }
 
         } else if (id == R.id.nav_archives) {
-            switchContent(RandomPostFragment.class);
-            item.setChecked(true);
-            setTitle(item.getTitle());
+            if (mFrontIssuesFragment != null) {
+                switchContent(mFrontIssuesFragment);
+            } else {
+                mFrontIssuesFragment = new FrontIssuesFragment();
+                switchContent(mFrontIssuesFragment);
+            }
 
         } else if (id == R.id.nav_likes) {
-            switchContent(StarredFragment.class);
-            item.setChecked(true);
-            setTitle(item.getTitle());
+            if (mStarredFragment != null) {
+                switchContent(mStarredFragment);
+            } else {
+                mStarredFragment = new StarredFragment();
+                switchContent(mStarredFragment);
+            }
 
         } else if (id == R.id.nav_about) {
             WebViewActivity.actionStart(this, getString(R.string.activity_about), Constant.ABOUT_URL);
         }
+
+        // Highlight the selected item has been done by NavigationView
+        item.setChecked(true);
+        // Set action bar title
+        setTitle(item.getTitle());
 
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
@@ -136,22 +152,22 @@ public class MainActivity extends BaseActivity
         Log.d(TAG, "switch theme clicked");
     }
 
-    private void switchContent(Class fragmentClass) {
-        Fragment frontFragment, nextFragment;
+    private void switchContent(Fragment fragment) {
         try {
-            nextFragment = (Fragment) fragmentClass.newInstance();
-            if (mFragment != nextFragment) {
-                frontFragment = mFragment;
-                mFragment = nextFragment;
+            Log.d(TAG, "current: " + curFragment.getClass().getSimpleName());
+            if (fragment != curFragment) {
+                Log.d(TAG, "new: " + fragment.getClass().getSimpleName());
+                Fragment frontFragment = curFragment;
+                curFragment = fragment;
+
                 // Insert the fragment by replacing any existing fragment
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                if (!nextFragment.isAdded()) {    // 先判断是否被add过
+                if (!fragment.isAdded()) {    // 先判断是否被add过
                     // 隐藏当前的fragment，add下一个到Activity中
-                    fragmentManager.beginTransaction().hide(frontFragment).add(R.id.frame_layout, nextFragment).commit();
-                    Log.d(TAG, "switch next fragment");
+                    fragmentManager.beginTransaction().hide(frontFragment).add(R.id.frame_layout, fragment).commit();
                 } else {
                     // 隐藏当前的fragment，显示下一个
-                    fragmentManager.beginTransaction().hide(frontFragment).show(nextFragment).commit();
+                    fragmentManager.beginTransaction().hide(frontFragment).show(fragment).commit();
                 }
             }
         } catch (Exception e) {
