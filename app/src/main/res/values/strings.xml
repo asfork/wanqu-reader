@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wanqu Reader</string>
+    <string name="app_info">Stay Focused</string>
+    <string name="app_description">Concerned about the Internet, startup, technology. Push 5 quality articles and reviews every day.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -33,8 +35,4 @@
     <string name="post_info">%1$s・%2$d min read</string>
 
     <string name="issue_title">%1$s Issue %2$s</string>
-
-    <string name="exit_info">Please click BACK again to exit</string>
-
-    <string name="via_app">(via Wanqu Reader: %1$s)</string>
 </resources>

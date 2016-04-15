@@ -5,6 +5,8 @@
     <color name="google_green">#34A853</color>
     <color name="google_yellow">#FBBC05</color>
 
+    <color name="facebook_blue">#3b5999</color>
+
     <color name="white">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="blackT12">#1F000000</color>
@@ -30,4 +32,5 @@
     <color name="orange300">#FFB74D</color>
     <color name="orange500">#FF9800</color>
     <color name="orange700">#F57C00</color>
+    <color name="orange900">#E65100</color>
 </resources>

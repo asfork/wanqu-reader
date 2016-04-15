@@ -17,6 +17,7 @@
     <dimen name="refresh_height_google">100dp</dimen>
 
     <!--font size-->
+    <dimen name="text_size_title">30sp</dimen>
     <dimen name="text_size_large">22sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_small">14sp</dimen>

@@ -1,6 +1,7 @@
 package com.steve.wanqureader.presentation.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.stephentuso.welcome.WelcomeScreenHelper;
+import com.stephentuso.welcome.ui.WelcomeActivity;
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.presentation.ui.fragments.FrontIssuesFragment;
 import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
@@ -25,11 +28,15 @@ import butterknife.Bind;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    private static String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
+    private static final String isFirstLaunch = "isFirstLaunch";
+    private static final String isSkipWelcome = "isSkipWelcome";
+
     private PostsFragment mPostFragment;
     private StarredFragment mStarredFragment;
     private FrontIssuesFragment mFrontIssuesFragment;
     private Fragment curFragment;
+    private SharedPreferences pref;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -45,6 +52,13 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        // First time launch, show welcome
+        pref = getSharedPreferences("data", MODE_PRIVATE);
+        if (pref.getBoolean(isFirstLaunch, true)) {
+            Log.d(TAG, isFirstLaunch + " is true");
+            new WelcomeScreenHelper(this, MWelcomeActivity.class).show();
+        }
+
         // First time init, create the UI.
         if (savedInstanceState == null) {
             mPostFragment = new PostsFragment();
@@ -64,6 +78,27 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
         mNavView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == WelcomeScreenHelper.DEFAULT_WELCOME_SCREEN_REQUEST) {
+            String welcomeKey = data.getStringExtra(WelcomeActivity.WELCOME_SCREEN_KEY);
+            SharedPreferences.Editor editor = pref.edit();
+
+            if (resultCode == RESULT_OK) {
+                editor.putBoolean(isFirstLaunch, false);
+                editor.putBoolean(isSkipWelcome, false);
+                Log.d(TAG, welcomeKey + " completed");
+            } else {
+                editor.putBoolean(isFirstLaunch, false);
+                editor.putBoolean(isSkipWelcome, true);
+                Log.d(TAG, welcomeKey + " canceled");
+            }
+            editor.apply();
+        }
     }
 
     @Override
