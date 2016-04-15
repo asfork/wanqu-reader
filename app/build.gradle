@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 apply plugin: 'com.android.application'
 
 android {
@@ -37,3 +39,18 @@ dependencies {
     compile 'com.github.satyan:sugar:1.5'
     compile 'com.stephentuso:welcome:0.6.1'
 }
+
+// about.html is templatized so that we can automatically insert
+// our version string in to it at build time.
+task filterAbout {
+    inputs.files files(["src/main/templates/about.html"])
+    outputs.file "src/main/assets/about.html"
+} << {
+    copy {
+        from "src/main/templates/about.html"
+        into "src/main/assets"
+        filter(ReplaceTokens, tokens: [versionname: android.defaultConfig.versionName])
+    }
+}
+
+preBuild.dependsOn filterAbout

@@ -40,5 +40,6 @@
             android:name=".presentation.ui.activities.WebViewActivity"
             android:launchMode="singleTask" />
         <activity android:name=".presentation.ui.activities.MWelcomeActivity" />
+        <activity android:name=".presentation.ui.activities.AboutActivity" />
     </application>
 </manifest>

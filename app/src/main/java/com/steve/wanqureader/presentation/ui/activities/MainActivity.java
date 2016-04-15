@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-            WebViewActivity.actionStart(this, getString(R.string.activity_about), Constant.ABOUT_URL);
+            AboutActivity.actionStart(this);
         } else if (id == R.id.action_issues) {
             Intent data = new Intent(Intent.ACTION_SENDTO);
             data.setData(Uri.parse(Constant.ISSUES_EMAIL));
@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_switch) {
 
         } else if (id == R.id.nav_about) {
-            WebViewActivity.actionStart(this, getString(R.string.activity_about), Constant.ABOUT_URL);
+            AboutActivity.actionStart(this);
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
