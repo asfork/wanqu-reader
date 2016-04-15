@@ -117,7 +117,8 @@ public class MainActivity extends BaseActivity
                 mPostFragment = new PostsFragment();
                 switchContent(mPostFragment);
             }
-
+            // Set action bar title
+            setTitle(item.getTitle());
         } else if (id == R.id.nav_archives) {
             if (mFrontIssuesFragment != null) {
                 switchContent(mFrontIssuesFragment);
@@ -125,7 +126,7 @@ public class MainActivity extends BaseActivity
                 mFrontIssuesFragment = new FrontIssuesFragment();
                 switchContent(mFrontIssuesFragment);
             }
-
+            setTitle(item.getTitle());
         } else if (id == R.id.nav_likes) {
             if (mStarredFragment != null) {
                 switchContent(mStarredFragment);
@@ -133,15 +134,12 @@ public class MainActivity extends BaseActivity
                 mStarredFragment = new StarredFragment();
                 switchContent(mStarredFragment);
             }
+            setTitle(item.getTitle());
+        } else if (id == R.id.nav_switch) {
 
         } else if (id == R.id.nav_about) {
             WebViewActivity.actionStart(this, getString(R.string.activity_about), Constant.ABOUT_URL);
         }
-
-        // Highlight the selected item has been done by NavigationView
-        item.setChecked(true);
-        // Set action bar title
-        setTitle(item.getTitle());
 
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
