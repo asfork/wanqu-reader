@@ -15,7 +15,7 @@
     <string name="nav_header_title">Wanqu Daily</string>
     <string name="nav_header_content">wanqu.co</string>
     <string name="nav_latest">Today\'s Issue</string>
-    <string name="nav_likes">Likes</string>
+    <string name="nav_likes">Bookmarks</string>
     <string name="nav_sleep_mode">Switch Theme</string>
     <string name="nav_about">About</string>
     <string name="nav_archives">The Front Issues</string>
@@ -32,7 +32,7 @@
     <!--post-->
     <string name="post_info">%1$s・%2$d min read</string>
 
-    <string name="issue_title"> Issue %1$s</string>
+    <string name="issue_title">%1$s Issue %2$s</string>
 
     <string name="exit_info">Please click BACK again to exit</string>
 

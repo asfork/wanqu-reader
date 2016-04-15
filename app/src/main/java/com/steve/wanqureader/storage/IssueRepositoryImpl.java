@@ -48,4 +48,15 @@ public class IssueRepositoryImpl implements IssueRepository {
         }
         return null;
     }
+
+    @Override
+    public ArrayList<Issue> fetchMoreIssuesList(int page) {
+        Call<ArrayList<Issue>> call = wanqu.listIssues(page);
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            Log.e(TAG, "fetch more issues list ", e);
+        }
+        return null;
+    }
 }

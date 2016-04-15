@@ -12,4 +12,6 @@ public interface IssueRepository {
     ArrayList<Post> fetchPostsByIssueNum(int id);
 
     ArrayList<Issue> fetchIssuesList();
+
+    ArrayList<Issue> fetchMoreIssuesList(int page);
 }

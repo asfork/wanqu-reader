@@ -12,7 +12,6 @@ import com.steve.wanqureader.R;
 import com.steve.wanqureader.network.model.Issue;
 import com.steve.wanqureader.presentation.presenters.FrontIssuesPresenter;
 import com.steve.wanqureader.presentation.ui.listeners.RecyclerViewClickListener;
-import com.steve.wanqureader.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +54,10 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Issue issue = mIssuesList.get(position);
         String issue_no = mContext.getResources().getString(R.string.issue_title);
-        String issue_title = DateUtil.titleTime(issue.getCreationDate())
-                + String.format(issue_no, issue.getIssueNo());
+//        String issue_title = DateUtil.titleTime(issue.getCreationDate())
+//                + String.format(issue_no, issue.getIssueNo());
 
-        holder.titleView.setText(issue_title);
+//        holder.titleView.setText(issue_title);
         holder.summaryView.setText(issue.getReadableTitle());
     }
 

@@ -14,8 +14,12 @@ public interface FrontIssuesPresenter extends BasePresenter {
     interface View extends BaseView {
         void showIssues(ArrayList<Issue> issues);
 
+        void showMoreIssues(ArrayList<Issue> issues);
+
         void onClickReadIssue(int issueId);
     }
 
     void fetchIssuesList();
+
+    void fetchMoreIssuesList(int page);
 }
