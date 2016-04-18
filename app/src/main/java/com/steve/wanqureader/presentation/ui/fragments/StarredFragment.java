@@ -68,6 +68,14 @@ public class StarredFragment extends BaseFragment implements StarredPresenter.Vi
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mStarredPresenter.fetchStarredPostsList();
+        }
+    }
+
+    @Override
     public void showPosts(List<StarredPost> posts) {
         mAdapter.refreshPosts(posts);
     }
