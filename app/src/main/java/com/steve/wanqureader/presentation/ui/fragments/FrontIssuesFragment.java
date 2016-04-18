@@ -78,8 +78,9 @@ public class FrontIssuesFragment extends BaseFragment implements FrontIssuesPres
             }
         };
 
+
         mRecyclerView.addItemDecoration(new DividerItemDecoration(
-                getResources().getDrawable(R.drawable.abc_list_divider_mtrl_alpha)));
+                getResources().getDrawable(R.drawable.divider)));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
 
