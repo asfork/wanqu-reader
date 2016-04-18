@@ -3,8 +3,6 @@ package com.steve.wanqureader.presentation.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
@@ -15,12 +13,11 @@ import android.widget.LinearLayout;
 import com.steve.wanqureader.R;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by steve on 4/15/16.
  */
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
     private static final String TAG = "AboutActivity";
 
     @Bind(R.id.linear_layout)
@@ -36,11 +33,12 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
+    public int getContentViewId() {
+        return R.layout.activity_about;
+    }
 
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         mToolbar.setTitle(getString(R.string.activity_about));
         setSupportActionBar(mToolbar);
         // back to home
