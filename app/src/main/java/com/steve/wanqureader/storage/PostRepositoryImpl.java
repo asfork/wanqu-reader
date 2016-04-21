@@ -64,12 +64,23 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public ArrayList<Post> fetchPostsByIssueNum(int id) {
+        Call<ArrayList<Post>> call = wanqu.postsByIssue(id);
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            Log.e(TAG, "fetch posts by issue number ", e);
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<Post> fetchPostsList() {
         Call<ArrayList<Post>> call = wanqu.listPosts(null);
         try {
             return call.execute().body();
         } catch (IOException e) {
-            Log.e(TAG, "fetch posts ArrayList ", e);
+            Log.e(TAG, "fetch posts list ", e);
         }
         return null;
     }

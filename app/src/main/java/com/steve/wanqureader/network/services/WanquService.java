@@ -28,7 +28,7 @@ public interface WanquService {
     @GET("issues")
     Call<ArrayList<Issue>> listIssues(@Query("page") Integer page);
 
-    @GET("issue/{id}")
+    @GET("issues/{id}")
     Call<ArrayList<Post>> postsByIssue(@Path("id") int issueId);
 
     @GET("tag/{id}")

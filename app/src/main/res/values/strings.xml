@@ -9,6 +9,7 @@
 
     <string name="snackbar_grade">Star success!</string>
     <string name="snackbar_close">Close</string>
+    <string name="snackbar_search">Please input correct issue number</string>
 
     <string name="action_search">Search</string>
     <string name="action_about">About</string>

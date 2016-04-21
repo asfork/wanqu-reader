@@ -16,6 +16,8 @@ public interface PostRepository {
 
     Post fetchPostByNum(int id);
 
+    ArrayList<Post> fetchPostsByIssueNum(int id);
+
     ArrayList<Post> fetchPostsList();
 
     ArrayList<Post> fetchMorePostsList(int page);

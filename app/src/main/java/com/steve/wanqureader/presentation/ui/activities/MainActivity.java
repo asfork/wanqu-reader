@@ -127,13 +127,15 @@ public class MainActivity extends BaseActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
             AboutActivity.actionStart(this);
+
         } else if (id == R.id.action_issues) {
             Intent data = new Intent(Intent.ACTION_SENDTO);
             data.setData(Uri.parse(Constant.ISSUES_EMAIL));
             data.putExtra(Intent.EXTRA_SUBJECT, Constant.ISSUES_TITLE);
             startActivity(data);
+
         } else if (id == R.id.action_search) {
-            Log.d("BaseActivity", "search");
+            SearchByIssueIdActivity.actionStart(this);
         }
 
         return super.onOptionsItemSelected(item);

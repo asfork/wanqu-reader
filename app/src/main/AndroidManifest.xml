@@ -40,6 +40,16 @@
             android:name=".presentation.ui.activities.WebViewActivity"
             android:launchMode="singleTask" />
         <activity android:name=".presentation.ui.activities.MWelcomeActivity" />
-        <activity android:name=".presentation.ui.activities.AboutActivity" />
+        <activity
+            android:name=".presentation.ui.activities.AboutActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".presentation.ui.activities.SearchByIssueIdActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.ui.activities.MainActivity" />
+        </activity>
     </application>
 </manifest>

@@ -4,6 +4,7 @@ import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
 import com.steve.wanqureader.domain.interactors.FetchMorePostsListInteractor;
 import com.steve.wanqureader.domain.interactors.FetchPostsListInteractor;
+import com.steve.wanqureader.domain.interactors.StarPostInteractor;
 import com.steve.wanqureader.domain.interactors.impl.FetchMorePostsListInteractorImpl;
 import com.steve.wanqureader.domain.interactors.impl.FetchPostsListInteractorImpl;
 import com.steve.wanqureader.domain.interactors.impl.StarPostInteractorImpl;
@@ -22,7 +23,7 @@ public class PostsPresenterImpl extends AbstractPresenter
         implements PostsPresenter,
         FetchPostsListInteractor.Callback,
         FetchMorePostsListInteractor.Callback,
-        StarPostInteractorImpl.Callback {
+        StarPostInteractor.Callback {
 
     private PostsPresenter.View mView;
     private PostRepository mPostRepository;

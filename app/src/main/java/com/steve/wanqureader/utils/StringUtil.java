@@ -3,6 +3,7 @@ package com.steve.wanqureader.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Steve Zhang
@@ -25,4 +26,10 @@ public class StringUtil {
     public static List<String> unserializeStringList(String str) {
         return new ArrayList<>(Arrays.asList(str.split(",")));
     }
+
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
+    }
+
 }

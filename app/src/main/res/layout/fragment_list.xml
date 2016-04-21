@@ -19,6 +19,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/element_padding"
-        android:paddingEnd="@dimen/element_padding"
-        android:clipToPadding="false" />
+        android:paddingEnd="@dimen/element_padding" />
 </com.steve.wanqureader.presentation.ui.CanRefreshLayout>

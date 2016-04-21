@@ -85,6 +85,6 @@ public class StarredPresenterImpl extends AbstractPresenter
 
     @Override
     public void onError(String message) {
-
+        mView.onError(message);
     }
 }

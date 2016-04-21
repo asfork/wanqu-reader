@@ -19,6 +19,9 @@ public class Constant {
 
     public static final int PROGRESS_HEADER_INVISIBILITY = 1;
     public static final int PROGRESS_FOOTER_INVISIBILITY = 2;
+    public static final int VISIBLE = 0x00000000;
+    public static final int INVISIBLE = 0x00000004;
+    public static final int GONE = 0x00000008;
 
     public static final int CACHE_TIME = 5 * 60; //cache for 5 minute
     public static final int CACHE_SIZE = 10 * 1024 * 1024;
