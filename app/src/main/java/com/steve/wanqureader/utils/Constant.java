@@ -13,6 +13,7 @@ public class Constant {
     public static final String ABOUT_URL = "file:///android_asset/about.html";
     public static final String EXTRA_TITLE = "extra.title";
     public static final String EXTRA_URL = "extra.url";
+    public static final String EXTRA_ISSUE_NUMBER = "extra.issueNum";
 
     public static final String ISSUES_EMAIL = "mailto:stevzhg+wanqu@gmail.com";
     public static final String ISSUES_TITLE = "Wanqu Reader Issues";

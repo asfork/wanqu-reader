@@ -12,7 +12,9 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.animation.Animation;
@@ -256,7 +258,11 @@ public class GoogleCircleProgressView extends ImageView {
         final Resources res = getResources();
         int[] colorRes = new int[colorResIds.length];
         for (int i = 0; i < colorResIds.length; i++) {
-            colorRes[i] = res.getColor(colorResIds[i]);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                colorRes[i] = ContextCompat.getColor(getContext(), colorResIds[i]);
+            } else {
+                colorRes[i] = res.getColor(colorResIds[i]);
+            }
         }
         setColorSchemeColors(colorRes);
     }

@@ -25,6 +25,7 @@ import com.steve.wanqureader.presentation.ui.adapters.SearchPostsAdapter;
 import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.threading.MainThreadImpl;
 import com.steve.wanqureader.utils.Constant;
+import com.steve.wanqureader.utils.DateUtil;
 import com.steve.wanqureader.utils.SnackbarUtil;
 import com.steve.wanqureader.utils.StringUtil;
 
@@ -61,7 +62,6 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         // back to home
         assert getSupportActionBar() != null;
@@ -72,7 +72,7 @@ public class SearchByIssueIdActivity extends BaseActivity
                 R.color.google_red,
                 R.color.google_yellow,
                 R.color.google_green);
-//        mProgressView.setStartEndTrim(0, (float) 0.75);
+        mProgressView.setStartEndTrim(0, (float) 0.75);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -168,6 +168,17 @@ public class SearchByIssueIdActivity extends BaseActivity
     @Override
     public void showPosts(ArrayList<Post> posts) {
         mAdapter.refreshPosts(posts);
+        mSearchView.onActionViewCollapsed();
+        if (!posts.isEmpty()) {
+            String title = getString(R.string.issue_title);
+            mToolbar.setTitle(String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()),
+                    posts.get(0).getIssue()));
+            Log.d(TAG, String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()),
+                    posts.get(0).getIssue()));
+        } else {
+            mToolbar.setTitle("");
+            SnackbarUtil.show(mRecyclerView, getString(R.string.snackbar_no_issue), 0);
+        }
     }
 
     @Override

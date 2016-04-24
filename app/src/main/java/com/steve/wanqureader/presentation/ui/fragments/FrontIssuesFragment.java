@@ -1,5 +1,6 @@
 package com.steve.wanqureader.presentation.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.steve.wanqureader.presentation.presenters.FrontIssuesPresenter;
 import com.steve.wanqureader.presentation.presenters.impl.FrontIssuesPresenterImpl;
 import com.steve.wanqureader.presentation.ui.CanRefreshLayout;
 import com.steve.wanqureader.presentation.ui.DividerItemDecoration;
+import com.steve.wanqureader.presentation.ui.activities.SearchByIssueIdActivity;
 import com.steve.wanqureader.presentation.ui.adapters.CanRVAdapter;
 import com.steve.wanqureader.presentation.ui.listeners.CanOnItemListener;
 import com.steve.wanqureader.storage.IssueRepositoryImpl;
@@ -64,7 +66,7 @@ public class FrontIssuesFragment extends BaseFragment implements FrontIssuesPres
         mAdapter = new CanRVAdapter<Issue>(mRecyclerView, R.layout.item_issue) {
             @Override
             protected void setView(CanHolderHelper viewHelper, int position, Issue model) {
-                String title = mContext.getResources().getString(R.string.issue_title);
+                String title = getString(R.string.issue_title);
 
                 viewHelper.setText(R.id.tv_title, String.format(title,
                         DateUtil.displayTime(model.getCreationDate()),
@@ -152,7 +154,9 @@ public class FrontIssuesFragment extends BaseFragment implements FrontIssuesPres
 
     @Override
     public void onClickReadIssue(int issueId) {
-        //TODO
+        Intent intent = new Intent(mContext, SearchByIssueIdActivity.class);
+        intent.putExtra(Constant.EXTRA_ISSUE_NUMBER, issueId);
+        startActivity(intent);
     }
 
     @Override

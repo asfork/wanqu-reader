@@ -37,12 +37,12 @@ import butterknife.Bind;
 public class PostsFragment extends BaseFragment
         implements PostsPresenter.View,
         CanRefreshLayout.OnRefreshListener, CanRefreshLayout.OnLoadMoreListener {
+
     private static final String TAG = "PostsFragment";
     private static final String FLAG_POSTS = "posts";
     private static final String FLAG_PAGE = "page";
     private CanRVAdapter mAdapter;
     private PostsPresenter mPostsPresenter;
-    private LinearLayoutManager mLayoutManager;
     private int page = 1;
 
     @Bind(R.id.refresh)
@@ -62,7 +62,7 @@ public class PostsFragment extends BaseFragment
         mCanRefreshLayout.setStyle(1, 1);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new CanRVAdapter<Post>(mRecyclerView, R.layout.item_post) {
@@ -81,7 +81,7 @@ public class PostsFragment extends BaseFragment
             @Override
             protected void setItemListener(CanHolderHelper viewHelper) {
                 viewHelper.setItemChildClickListener(R.id.linear_layout);
-                viewHelper.setItemChildClickListener(R.id.grade_button);
+                viewHelper.setItemChildClickListener(R.id.ib_grade);
             }
         };
 
@@ -97,7 +97,7 @@ public class PostsFragment extends BaseFragment
                     case R.id.linear_layout:
                         onClickReadPost(post.getUrl(), post.getSlug());
                         break;
-                    case R.id.grade_button:
+                    case R.id.ib_grade:
                         onClickStarPost(post);
                         break;
                 }
@@ -173,6 +173,7 @@ public class PostsFragment extends BaseFragment
 
     @Override
     public void onPostStarred() {
+
         SnackbarUtil.show(mCanRefreshLayout, getString(R.string.snackbar_grade), 0);
     }
 

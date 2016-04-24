@@ -88,13 +88,24 @@ public class StarredFragment extends BaseFragment implements StarredPresenter.Vi
     }
 
     @Override
-    public void onClickUnstarPost(int postNo) {
-        mStarredPresenter.unStarPost(postNo);
+    public void onClickUnstarPost(int id, int position) {
+        mStarredPresenter.unStarPost(id, position);
     }
 
     @Override
-    public void onPostUnstarred(StarredPost post) {
+    public void onPostUnstarred(int position) {
         Log.d(TAG, "Post Unstarred");
+        mAdapter.removePost(position);
+    }
+
+    @Override
+    public void onClickRestarPost(StarredPost post) {
+        mStarredPresenter.reStarPost(post);
+    }
+
+    @Override
+    public void onPostRestarred() {
+        Log.d(TAG, "Post Restarred");
     }
 
     @Override

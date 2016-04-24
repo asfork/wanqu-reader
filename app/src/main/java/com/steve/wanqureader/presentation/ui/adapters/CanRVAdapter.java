@@ -320,10 +320,7 @@ class CanRViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     @Override
     public boolean onLongClick(View view) {
-
-        if (mOnItemListener != null) {
-            return mOnItemListener.onRVItemLongClick(mRecyclerView, view, getAdapterPosition());
-        }
-        return false;
+        return mOnItemListener != null && mOnItemListener.onRVItemLongClick(
+                mRecyclerView, view, getAdapterPosition());
     }
 }

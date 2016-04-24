@@ -3,8 +3,10 @@ package com.steve.wanqureader.presentation.presenters.impl;
 import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
 import com.steve.wanqureader.domain.interactors.FetchStarredPostsInteractor;
+import com.steve.wanqureader.domain.interactors.RestarPostInteractor;
 import com.steve.wanqureader.domain.interactors.UnStarPostInteractor;
 import com.steve.wanqureader.domain.interactors.impl.FetchStarredPostsInteractorImpl;
+import com.steve.wanqureader.domain.interactors.impl.RestarPostInteractorImpl;
 import com.steve.wanqureader.domain.interactors.impl.UnStarPostInteractorImpl;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.presentation.presenters.StarredPresenter;
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class StarredPresenterImpl extends AbstractPresenter
         implements StarredPresenter, FetchStarredPostsInteractor.Callback,
-        UnStarPostInteractor.Callback {
+        UnStarPostInteractor.Callback, RestarPostInteractor.Callback {
 
     private StarredPresenter.View mView;
     private PostRepository mPostRepository;
@@ -47,11 +49,12 @@ public class StarredPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void unStarPost(int id) {
+    public void unStarPost(int id, int position) {
         UnStarPostInteractorImpl interactor = new UnStarPostInteractorImpl(
                 mExecutor,
                 mMainThread,
                 id,
+                position,
                 mPostRepository,
                 this
         );
@@ -59,8 +62,25 @@ public class StarredPresenterImpl extends AbstractPresenter
     }
 
     @Override
-    public void onPostUnstar(StarredPost post) {
-        mView.onPostUnstarred(post);
+    public void reStarPost(StarredPost post) {
+        RestarPostInteractorImpl interactor = new RestarPostInteractorImpl(
+                mExecutor,
+                mMainThread,
+                post,
+                mPostRepository,
+                this
+        );
+        interactor.execute();
+    }
+
+    @Override
+    public void onPostRestarred() {
+        mView.onPostRestarred();
+    }
+
+    @Override
+    public void onPostUnstarred(int position) {
+        mView.onPostUnstarred(position);
     }
 
     @Override

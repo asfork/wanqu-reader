@@ -17,12 +17,18 @@ public interface StarredPresenter extends BasePresenter {
 
         void onClickReadStarredPost(String url, String slug);
 
-        void onClickUnstarPost(int postNo);
+        void onClickUnstarPost(int id, int position);
 
-        void onPostUnstarred(StarredPost post);
+        void onPostUnstarred(int position);
+
+        void onClickRestarPost(StarredPost post);
+
+        void onPostRestarred();
     }
 
     void fetchStarredPostsList();
 
-    void unStarPost(int id);
+    void unStarPost(int id, int position);
+
+    void reStarPost(StarredPost post);
 }

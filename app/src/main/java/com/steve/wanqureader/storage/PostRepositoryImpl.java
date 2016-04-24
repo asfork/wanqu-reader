@@ -32,7 +32,16 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void insert(Post post) {
         StarredPost starredPost = StorageModelConverter.convertToStoragePostModel(post);
-        starredPost.save();
+        String postNum = String.valueOf(starredPost.getPostNum());
+        Log.d(TAG, postNum);
+        if (StarredPost.find(StarredPost.class, "POSTNUM = ?", postNum).isEmpty()) {
+            starredPost.save();
+        }
+    }
+
+    @Override
+    public void insert(StarredPost post) {
+        post.save();
     }
 
     @Override
@@ -53,7 +62,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post fetchPostByNum(int id) {
+    public Post fetchPostById(int id) {
         Call<Post> call = wanqu.postById(id);
         try {
             return call.execute().body();

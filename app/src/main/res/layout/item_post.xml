@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:textColor="@color/orange500"
                 android:textSize="@dimen/text_size_vsmall" />
 
             <TextView
@@ -34,12 +35,11 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/grade_button"
+            android:id="@+id/ib_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/ic_menu_grade_black_24dp"
-            android:tint="@color/red700" />
+            android:src="@drawable/ic_post_bookmark_border_red_24dp"
+            android:background="@android:color/transparent" />
     </LinearLayout>
 
     <TextView

@@ -12,9 +12,11 @@ import java.util.List;
 public interface PostRepository {
     void insert(Post post);
 
+    void insert(StarredPost post);
+
     void delete(StarredPost post);
 
-    Post fetchPostByNum(int id);
+    Post fetchPostById(int id);
 
     ArrayList<Post> fetchPostsByIssueNum(int id);
 

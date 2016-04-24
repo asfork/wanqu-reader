@@ -2,23 +2,22 @@ package com.steve.wanqureader.domain.interactors.impl;
 
 import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
-import com.steve.wanqureader.domain.interactors.UnStarPostInteractor;
+import com.steve.wanqureader.domain.interactors.RestarPostInteractor;
 import com.steve.wanqureader.domain.interactors.base.AbstractInteractor;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.storage.model.StarredPost;
 
 /**
- * Created by steve on 4/11/16.
+ * Created by steve on 4/24/16.
  */
-public class UnStarPostInteractorImpl extends AbstractInteractor implements UnStarPostInteractor {
-    private UnStarPostInteractor.Callback mCallback;
+public class RestarPostInteractorImpl extends AbstractInteractor implements RestarPostInteractor {
+    private RestarPostInteractor.Callback mCallback;
     private PostRepository mPostRepository;
-    private int id;
-    private int position;
+    private StarredPost mPost;
 
-    public UnStarPostInteractorImpl(Executor threadExecutor, MainThread mainThread,
-                                    int id, int position, PostRepository postRepository,
-                                    UnStarPostInteractor.Callback callback) {
+    public RestarPostInteractorImpl(Executor threadExecutor, MainThread mainThread,
+                                    StarredPost post, PostRepository postRepository,
+                                    RestarPostInteractor.Callback callback) {
         super(threadExecutor, mainThread);
 
         if (postRepository == null || callback == null) {
@@ -27,19 +26,17 @@ public class UnStarPostInteractorImpl extends AbstractInteractor implements UnSt
 
         mPostRepository = postRepository;
         mCallback = callback;
-        this.id = id;
-        this.position = position;
+        mPost = post;
     }
 
     @Override
     public void run() {
-        final StarredPost post = mPostRepository.getStarredPostbyId(id);
-        if (post != null) mPostRepository.delete(post);
+        mPostRepository.insert(mPost);
 
         mMainThread.post(new Runnable() {
             @Override
             public void run() {
-                mCallback.onPostUnstarred(position);
+                mCallback.onPostRestarred();
             }
         });
     }

@@ -1,11 +1,11 @@
 package com.steve.wanqureader.presentation.ui.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.steve.wanqureader.R;
@@ -35,14 +35,18 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
         mContext = context;
     }
 
-    public void refreshPosts(@NonNull List<StarredPost> posts) {
+    public void refreshPosts(List<StarredPost> posts) {
         // clean up old data
-        if (mPostList != null) {
+        if (posts != null) {
+            mPostList.clear();
             mPostList.addAll(posts);
+            notifyDataSetChanged();
         }
-        mPostList = posts;
+    }
 
-        notifyDataSetChanged();
+    public void removePost(int position) {
+        mPostList.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
@@ -62,6 +66,13 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
                 post.getReadTimeMinutes()));
         holder.titleView.setText(post.getReadableTitle());
         holder.articleView.setText(post.getReadablerAticle());
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mView.onClickUnstarPost(post.getId().intValue(), holder.getAdapterPosition());
+            }
+        });
+
     }
 
     @Override
@@ -74,7 +85,8 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
         mView.onClickReadStarredPost(mPostList.get(position).getUrl(), mPostList.get(position).getSlug());
     }
 
-    public final static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public final static class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
         private RecyclerViewClickListener mListener;
 
         @Bind(R.id.tv_header_domain)
@@ -85,6 +97,8 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
         TextView articleView;
         @Bind(R.id.tv_header_info)
         TextView infoView;
+        @Bind(R.id.ib_star)
+        ImageButton imageButton;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {
             super(view);
