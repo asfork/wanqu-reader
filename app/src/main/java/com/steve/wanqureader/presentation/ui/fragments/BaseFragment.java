@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+import com.steve.wanqureader.WanquApplication;
+
 import butterknife.ButterKnife;
 
 /**
@@ -38,5 +41,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);//解绑
+        RefWatcher refWatcher = WanquApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 }
