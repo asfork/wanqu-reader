@@ -93,9 +93,8 @@ public class CustomTabActivityHelper {
         if (mClient == null) return false;
 
         CustomTabsSession session = getSession();
-        if (session == null) return false;
+        return session != null && session.mayLaunchUrl(uri, extras, otherLikelyBundles);
 
-        return session.mayLaunchUrl(uri, extras, otherLikelyBundles);
     }
 
     /**

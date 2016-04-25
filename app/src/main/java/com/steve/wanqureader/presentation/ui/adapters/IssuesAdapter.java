@@ -53,7 +53,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Issue issue = mIssuesList.get(position);
-        String issue_no = mContext.getResources().getString(R.string.issue_title);
+//        String issue_no = mContext.getResources().getString(R.string.issue_title);
 //        String issue_title = DateUtil.titleTime(issue.getCreationDate())
 //                + String.format(issue_no, issue.getIssueNo());
 

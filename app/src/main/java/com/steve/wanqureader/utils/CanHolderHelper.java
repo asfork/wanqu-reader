@@ -65,10 +65,7 @@ public class CanHolderHelper implements View.OnClickListener,
     @Override
     public boolean onLongClick(View v) {
 
-        if (mOnItemListener != null) {
-            return mOnItemListener.onItemChildLongClick(v, mPosition);
-        }
-        return false;
+        return mOnItemListener != null && mOnItemListener.onItemChildLongClick(v, mPosition);
     }
 
     public CanHolderHelper(ViewGroup parent, int layoutId) {

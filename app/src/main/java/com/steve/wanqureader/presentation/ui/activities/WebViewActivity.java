@@ -30,9 +30,8 @@ public class WebViewActivity extends BaseActivity {
     @Bind(R.id.web_view)
     WebView mWebView;
 
-    public static void actionStart(Context context, String title, String url) {
+    public static void actionStart(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(Constant.EXTRA_TITLE, title);
         intent.putExtra(Constant.EXTRA_URL, url);
         context.startActivity(intent);
     }

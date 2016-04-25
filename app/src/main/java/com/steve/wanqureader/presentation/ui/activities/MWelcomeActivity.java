@@ -13,7 +13,7 @@ public class MWelcomeActivity extends WelcomeActivity {
     protected WelcomeScreenConfiguration configuration() {
         return new WelcomeScreenBuilder(this)
                 .theme(R.style.CustomWelcomeScreenTheme)
-                .titlePage(R.drawable.ic_welcome_wanqu, getString(R.string.app_name), R.color.orange900)
+                .titlePage(R.mipmap.ic_welcome_wanqu, getString(R.string.app_name), R.color.orange900)
 //                .basicPage(R.drawable.ic_welcome_wanqu, getString(R.string.app_name), "第三方的《湾区日报》客户端", R.color.orange900)
                 .parallaxPage(R.layout.parallax_welcome, getString(R.string.app_info), getString(R.string.app_description), R.color.facebook_blue, 0.2f, 2f)
                 .swipeToDismiss(true)

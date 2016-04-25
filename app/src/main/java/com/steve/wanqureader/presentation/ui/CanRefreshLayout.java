@@ -824,10 +824,7 @@ public class CanRefreshLayout extends ViewGroup {
                 } else if (mHeadStyle == MID) {
 
 
-                    int offY = moveY / 2 + mHeaderHeight / 2;
-
-
-                    mHeadOffY = offY;
+                    mHeadOffY = moveY / 2 + mHeaderHeight / 2;
                     mContentOffY = moveY;
 
 
@@ -851,10 +848,7 @@ public class CanRefreshLayout extends ViewGroup {
                 } else if (mFootStyle == MID) {
 
 
-                    int offY = moveY / 2 + mFooterHeight / 2;
-
-
-                    mFootOffY = offY;
+                    mFootOffY = moveY / 2 + mFooterHeight / 2;
                     mContentOffY = -moveY;
 
 
