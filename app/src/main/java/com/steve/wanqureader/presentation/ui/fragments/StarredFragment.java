@@ -3,6 +3,7 @@ package com.steve.wanqureader.presentation.ui.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,6 @@ import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.storage.model.StarredPost;
 import com.steve.wanqureader.threading.MainThreadImpl;
 import com.steve.wanqureader.utils.CustomTabActivityHelper;
-import com.steve.wanqureader.utils.SnackbarUtil;
 import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.List;
@@ -115,6 +115,6 @@ public class StarredFragment extends BaseFragment implements StarredPresenter.Vi
 
     @Override
     public void onError(String message) {
-        SnackbarUtil.show(mRecyclerView, message, 0);
+        Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
 }

@@ -3,6 +3,7 @@ package com.steve.wanqureader.presentation.ui.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,6 @@ import com.steve.wanqureader.utils.CanHolderHelper;
 import com.steve.wanqureader.utils.Constant;
 import com.steve.wanqureader.utils.CustomTabActivityHelper;
 import com.steve.wanqureader.utils.DateUtil;
-import com.steve.wanqureader.utils.SnackbarUtil;
 import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.ArrayList;
@@ -173,8 +173,7 @@ public class PostsFragment extends BaseFragment
 
     @Override
     public void onPostStarred() {
-
-        SnackbarUtil.show(mCanRefreshLayout, getString(R.string.snackbar_grade), 0);
+        Snackbar.make(mRecyclerView, getString(R.string.snackbar_grade), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -191,6 +190,6 @@ public class PostsFragment extends BaseFragment
 
     @Override
     public void onError(String message) {
-        SnackbarUtil.show(mCanRefreshLayout, message, 0);
+        Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
 }

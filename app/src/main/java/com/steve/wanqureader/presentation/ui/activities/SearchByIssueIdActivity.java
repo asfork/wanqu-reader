@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,6 @@ import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.threading.MainThreadImpl;
 import com.steve.wanqureader.utils.Constant;
 import com.steve.wanqureader.utils.DateUtil;
-import com.steve.wanqureader.utils.SnackbarUtil;
 import com.steve.wanqureader.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -42,6 +42,7 @@ public class SearchByIssueIdActivity extends BaseActivity
     private SearchPostsAdapter mAdapter;
     private SearchPresenter mSearchPresenter;
     private SearchView mSearchView;
+    private int mIssueId;
 
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -62,6 +63,7 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         // back to home
         assert getSupportActionBar() != null;
@@ -92,6 +94,11 @@ public class SearchByIssueIdActivity extends BaseActivity
                 this,
                 new PostRepositoryImpl(this)
         );
+
+        mIssueId = getIntent().getIntExtra(Constant.EXTRA_ISSUE_NUMBER, 0);
+        if (mIssueId != 0) {
+            mSearchPresenter.fetchPostsByIssueId(mIssueId);
+        }
     }
 
     @Override
@@ -112,7 +119,7 @@ public class SearchByIssueIdActivity extends BaseActivity
          */
 //        mSearchView.setSubmitButtonEnabled(true);
 
-        mSearchView.onActionViewExpanded();
+        if (mIssueId == 0) mSearchView.onActionViewExpanded();
         mSearchView.setOnQueryTextListener(this);
         return true;
     }
@@ -150,7 +157,10 @@ public class SearchByIssueIdActivity extends BaseActivity
                 if (StringUtil.isNumeric(query)) {
                     mSearchPresenter.fetchPostsByIssueId(Integer.parseInt(query));
                 } else {
-                    SnackbarUtil.show(mRecyclerView, getString(R.string.snackbar_search), 0);
+                    Log.d(TAG, getString(R.string.snackbar_search));
+                    Snackbar.make(mRecyclerView,
+                            getString(R.string.snackbar_search),
+                            Snackbar.LENGTH_SHORT).show();
                 }
                 // 输入法如果是显示状态，那么就隐藏输入法
                 imm.hideSoftInputFromWindow(mSearchView.getWindowToken(), 1);
@@ -173,11 +183,13 @@ public class SearchByIssueIdActivity extends BaseActivity
             String title = getString(R.string.issue_title);
             mToolbar.setTitle(String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()),
                     posts.get(0).getIssue()));
-            Log.d(TAG, String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()),
-                    posts.get(0).getIssue()));
+//            Log.d(TAG, String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
         } else {
-            mToolbar.setTitle("");
-            SnackbarUtil.show(mRecyclerView, getString(R.string.snackbar_no_issue), 0);
+            setTitle("");
+            Log.d(TAG, getString(R.string.snackbar_no_issue));
+            Snackbar.make(mRecyclerView,
+                    getString(R.string.snackbar_no_issue),
+                    Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -215,6 +227,6 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     public void onError(String message) {
-        SnackbarUtil.show(mRecyclerView, message, 0);
+        Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
 }
