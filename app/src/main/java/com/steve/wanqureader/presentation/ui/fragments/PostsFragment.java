@@ -1,8 +1,6 @@
 package com.steve.wanqureader.presentation.ui.fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,15 +15,14 @@ import com.steve.wanqureader.presentation.presenters.PostsPresenter;
 import com.steve.wanqureader.presentation.presenters.impl.PostsPresenterImpl;
 import com.steve.wanqureader.presentation.ui.CanRefreshLayout;
 import com.steve.wanqureader.presentation.ui.DividerItemDecoration;
+import com.steve.wanqureader.presentation.ui.activities.WebViewActivity;
 import com.steve.wanqureader.presentation.ui.adapters.CanRVAdapter;
 import com.steve.wanqureader.presentation.ui.listeners.CanOnItemListener;
 import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.threading.MainThreadImpl;
 import com.steve.wanqureader.utils.CanHolderHelper;
 import com.steve.wanqureader.utils.Constant;
-import com.steve.wanqureader.utils.CustomTabActivityHelper;
 import com.steve.wanqureader.utils.DateUtil;
-import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.ArrayList;
 
@@ -163,9 +160,11 @@ public class PostsFragment extends BaseFragment
 
     @Override
     public void onClickReadPost(String url, String slug) {
-        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
-        CustomTabActivityHelper.openCustomTab(getActivity(), customTabsIntent,
-                Uri.parse(url), new WebviewFallback());
+//        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
+//        CustomTabActivityHelper.openCustomTab(getActivity(), customTabsIntent,
+//                Uri.parse(url), new WebviewFallback());
+
+        WebViewActivity.actionStart(mContext, slug, url);
     }
 
     @Override

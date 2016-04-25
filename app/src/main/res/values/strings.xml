@@ -13,6 +13,7 @@
     <string name="snackbar_no_issue">Couldn\'t find the issue</string>
 
     <string name="action_search">Search</string>
+    <string name="action_share">Share</string>
     <string name="action_about">About</string>
     <string name="action_issues">Issues</string>
 

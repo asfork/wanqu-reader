@@ -29,6 +29,7 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static final String TAG = "MainActivity";
+    private static final String fragmentPosts = "PostsFragment";
     private static final String isFirstLaunch = "isFirstLaunch";
     private static final String isSkipWelcome = "isSkipWelcome";
 
@@ -66,7 +67,7 @@ public class MainActivity extends BaseActivity
             getSupportFragmentManager().beginTransaction().add(
                     R.id.frame_layout,
                     mPostFragment,
-                    Constant.TAG_FRAGMENT_POSTS
+                    fragmentPosts
             ).commit();
         }
 

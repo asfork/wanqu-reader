@@ -10,7 +10,7 @@ public class Constant {
     public static final String SITE_URL = "https://wanqu.co";
     public static final String BASE_API_URL = "http://162.243.150.140/api/v1/";
 
-    public static final String EXTRA_TITLE = "extra.title";
+    public static final String EXTRA_SLUG = "extra.slug";
     public static final String EXTRA_URL = "extra.url";
     public static final String EXTRA_ISSUE_NUMBER = "extra.issueNum";
 
@@ -25,5 +25,5 @@ public class Constant {
     public static final int CACHE_TIME = 5 * 60; //cache for 5 minute
     public static final int CACHE_SIZE = 10 * 1024 * 1024;
 
-    public static final String TAG_FRAGMENT_POSTS = "PostsFragment";
+    public static final String SHARE_TYPE = "text/plain";
 }

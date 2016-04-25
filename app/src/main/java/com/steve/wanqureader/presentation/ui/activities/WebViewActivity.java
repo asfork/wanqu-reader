@@ -3,7 +3,10 @@ package com.steve.wanqureader.presentation.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,8 +23,10 @@ import butterknife.Bind;
  */
 public class WebViewActivity extends BaseActivity {
     private static final String TAG = "WebViewActivity";
+    private ShareActionProvider mShareActionProvider;
+    private Intent mShareIntent;
     private String url;
-    private String title;
+    private String slug;
 
     @Bind(R.id.linear_layout)
     LinearLayout mLinearLayout;
@@ -30,8 +35,9 @@ public class WebViewActivity extends BaseActivity {
     @Bind(R.id.web_view)
     WebView mWebView;
 
-    public static void actionStart(Context context, String url) {
+    public static void actionStart(Context context, String slug, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(Constant.EXTRA_SLUG, slug);
         intent.putExtra(Constant.EXTRA_URL, url);
         context.startActivity(intent);
     }
@@ -43,10 +49,13 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        title = getIntent().getStringExtra(Constant.EXTRA_TITLE);
+        slug = getIntent().getStringExtra(Constant.EXTRA_SLUG);
         url = getIntent().getStringExtra(Constant.EXTRA_URL);
+        mShareIntent = new Intent(Intent.ACTION_SEND);
+        mShareIntent.setType(Constant.SHARE_TYPE);
+        mShareIntent.putExtra(Intent.EXTRA_TEXT, url);
 
-        mToolbar.setTitle(title);
+        mToolbar.setTitle(slug);
         setSupportActionBar(mToolbar);
         // back to home
         assert getSupportActionBar() != null;
@@ -67,6 +76,22 @@ public class WebViewActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         mWebView.loadUrl(url);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.webview, menu);
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.action_share);
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        // Connect the dots: give the ShareActionProvider its Share Intent
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(mShareIntent);
+        }
+
+        return true;
     }
 
     @Override
