@@ -81,7 +81,7 @@ public class PostsFragment extends BaseFragment
             @Override
             protected void setItemListener(CanHolderHelper viewHelper) {
                 viewHelper.setItemChildClickListener(R.id.linear_layout);
-                viewHelper.setItemChildClickListener(R.id.ib_grade);
+                viewHelper.setItemChildClickListener(R.id.ib_star);
             }
         };
 
@@ -97,7 +97,7 @@ public class PostsFragment extends BaseFragment
                     case R.id.linear_layout:
                         onClickReadPost(post.getUrl(), post.getSlug());
                         break;
-                    case R.id.ib_grade:
+                    case R.id.ib_star:
                         onClickStarPost(post);
                         break;
                 }

@@ -35,7 +35,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/ib_grade"
+            android:id="@+id/ib_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_post_bookmark_border_red_24dp"

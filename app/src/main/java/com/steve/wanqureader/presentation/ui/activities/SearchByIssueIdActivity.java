@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,8 +27,10 @@ import com.steve.wanqureader.presentation.ui.adapters.SearchPostsAdapter;
 import com.steve.wanqureader.storage.PostRepositoryImpl;
 import com.steve.wanqureader.threading.MainThreadImpl;
 import com.steve.wanqureader.utils.Constant;
+import com.steve.wanqureader.utils.CustomTabActivityHelper;
 import com.steve.wanqureader.utils.DateUtil;
 import com.steve.wanqureader.utils.StringUtil;
+import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.ArrayList;
 
@@ -183,7 +186,7 @@ public class SearchByIssueIdActivity extends BaseActivity
             String title = getString(R.string.issue_title);
             mToolbar.setTitle(String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()),
                     posts.get(0).getIssue()));
-//            Log.d(TAG, String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
+            Log.d(TAG, String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
         } else {
             setTitle("");
             Log.d(TAG, getString(R.string.snackbar_no_issue));
@@ -195,17 +198,19 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     public void onClickReadPost(String url, String slug) {
-
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
+        CustomTabActivityHelper.openCustomTab(this, customTabsIntent,
+                Uri.parse(url), new WebviewFallback());
     }
 
     @Override
     public void onClickStarPost(Post post) {
-
+        mSearchPresenter.starPost(post);
     }
 
     @Override
     public void onPostStarred() {
-
+        Snackbar.make(mRecyclerView, getString(R.string.snackbar_grade), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
