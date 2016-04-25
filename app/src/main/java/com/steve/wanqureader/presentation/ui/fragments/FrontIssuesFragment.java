@@ -105,6 +105,7 @@ public class FrontIssuesFragment extends BaseFragment implements FrontIssuesPres
         );
 
         mFrontIssuesPresenter.fetchIssuesList();
+        onSetProgressBarVisibility(Constant.PROGRESS_VISIBLE);
     }
 
     @SuppressWarnings("unchecked ")
@@ -162,6 +163,9 @@ public class FrontIssuesFragment extends BaseFragment implements FrontIssuesPres
     @Override
     public void onSetProgressBarVisibility(int statusCode) {
         switch (statusCode) {
+            case Constant.PROGRESS_VISIBLE:
+                mCanRefreshLayout.autoRefresh();
+                break;
             case Constant.PROGRESS_HEADER_INVISIBILITY:
                 mCanRefreshLayout.refreshComplete();
                 break;

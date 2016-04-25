@@ -216,17 +216,14 @@ public class SearchByIssueIdActivity extends BaseActivity
     @Override
     public void onSetProgressBarVisibility(int statusCode) {
         switch (statusCode) {
-            case Constant.VISIBLE:
-                mProgressView.setVisibility(statusCode);
+            case Constant.PROGRESS_VISIBLE:
+                mProgressView.start();
                 break;
-            case Constant.INVISIBLE:
-                mProgressView.setVisibility(statusCode);
-                break;
-            case Constant.GONE:
-                mProgressView.setVisibility(statusCode);
+            case Constant.PROGRESS_INVISIBLE:
+                mProgressView.stop();
                 break;
             default:
-                mProgressView.setVisibility(statusCode);
+                mProgressView.stop();
         }
     }
 

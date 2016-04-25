@@ -43,13 +43,13 @@ public class SearchPresenterImpl extends AbstractPresenter
                 this
         );
         interactor.execute();
-        mView.onSetProgressBarVisibility(Constant.VISIBLE);
+        mView.onSetProgressBarVisibility(Constant.PROGRESS_VISIBLE);
     }
 
     @Override
     public void onPostsByIssueIdRetrieved(ArrayList<Post> posts) {
         mView.showPosts(posts);
-        mView.onSetProgressBarVisibility(Constant.GONE);
+        mView.onSetProgressBarVisibility(Constant.PROGRESS_INVISIBLE);
     }
 
     @Override
