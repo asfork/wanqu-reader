@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.domain.executor.impl.ThreadExecutor;
 import com.steve.wanqureader.network.model.Post;
@@ -64,21 +66,31 @@ public class PostsFragment extends BaseFragment
 
         mAdapter = new CanRVAdapter<Post>(mRecyclerView, R.layout.item_post) {
             @Override
-            protected void setView(CanHolderHelper viewHelper, int position, Post model) {
+            protected void setView(CanHolderHelper viewHelper, final int position, final Post post) {
                 String info = mContext.getResources().getString(R.string.post_info);
 
-                viewHelper.setText(R.id.tv_header_domain, model.getUrlDomain());
+                viewHelper.setText(R.id.tv_header_domain, post.getUrlDomain());
                 viewHelper.setText(R.id.tv_header_info, String.format(info,
-                        DateUtil.displayTime(model.getCreationDate()),
-                        model.getReadTimeMinutes()));
-                viewHelper.setText(R.id.tv_title, model.getReadableTitle());
-                viewHelper.setText(R.id.tv_article, model.getReadableArticle());
+                        DateUtil.displayTime(post.getCreationDate()),
+                        post.getReadTimeMinutes()));
+                viewHelper.setText(R.id.tv_title, post.getReadableTitle());
+                viewHelper.setText(R.id.tv_article, post.getReadableArticle());
+                viewHelper.setListener(R.id.likebutton, new OnLikeListener() {
+                    @Override
+                    public void liked(LikeButton likeButton) {
+                        onClickStarPost(post);
+                    }
+
+                    @Override
+                    public void unLiked(LikeButton likeButton) {
+                        onClickUnStarPost(post.getPostNo());
+                    }
+                });
             }
 
             @Override
             protected void setItemListener(CanHolderHelper viewHelper) {
                 viewHelper.setItemChildClickListener(R.id.linear_layout);
-                viewHelper.setItemChildClickListener(R.id.ib_star);
             }
         };
 
@@ -93,9 +105,6 @@ public class PostsFragment extends BaseFragment
                 switch (view.getId()) {
                     case R.id.linear_layout:
                         onClickReadPost(post.getUrl(), post.getSlug());
-                        break;
-                    case R.id.ib_star:
-                        onClickStarPost(post);
                         break;
                 }
             }
@@ -174,7 +183,17 @@ public class PostsFragment extends BaseFragment
 
     @Override
     public void onPostStarred() {
-        Snackbar.make(mRecyclerView, getString(R.string.snackbar_grade), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mRecyclerView, getString(R.string.snackbar_star), Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClickUnStarPost(int id) {
+        mPostsPresenter.unStarPost(id);
+    }
+
+    @Override
+    public void onPostUnStarred() {
+        Snackbar.make(mRecyclerView, getString(R.string.snackbar_unstar), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

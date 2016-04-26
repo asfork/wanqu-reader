@@ -210,7 +210,17 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     public void onPostStarred() {
-        Snackbar.make(mRecyclerView, getString(R.string.snackbar_grade), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mRecyclerView, getString(R.string.snackbar_star), Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClickUnStarPost(int id) {
+        mSearchPresenter.unStarPost(id);
+    }
+
+    @Override
+    public void onPostUnStarred() {
+        Snackbar.make(mRecyclerView, getString(R.string.snackbar_unstar), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

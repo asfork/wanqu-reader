@@ -22,6 +22,10 @@ public interface PostsPresenter extends BasePresenter {
         void onClickStarPost(Post post);
 
         void onPostStarred();
+
+        void onClickUnStarPost(int id);
+
+        void onPostUnStarred();
     }
 
     void fetchPostsList();
@@ -29,4 +33,6 @@ public interface PostsPresenter extends BasePresenter {
     void fetchMorePostsList(int page);
 
     void starPost(Post post);
+
+    void unStarPost(int id);
 }

@@ -17,6 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.steve.wanqureader.presentation.ui.listeners.CanOnItemListener;
 
 /**
@@ -232,6 +234,19 @@ public class CanHolderHelper implements View.OnClickListener,
     public CanHolderHelper setHtml(@IdRes int viewId, String source) {
         TextView view = getView(viewId);
         view.setText(Html.fromHtml(source));
+        return this;
+    }
+
+    /**
+     * 设置对应id的控件的监听器内容
+     *
+     * @param viewId
+     * @param source OnLikeListener
+     * @return
+     */
+    public CanHolderHelper setListener(@IdRes int viewId, OnLikeListener source) {
+        LikeButton view = getView(viewId);
+        view.setOnLikeListener(source);
         return this;
     }
 

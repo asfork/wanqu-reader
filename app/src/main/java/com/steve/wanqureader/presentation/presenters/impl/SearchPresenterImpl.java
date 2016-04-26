@@ -4,8 +4,10 @@ import com.steve.wanqureader.domain.executor.Executor;
 import com.steve.wanqureader.domain.executor.MainThread;
 import com.steve.wanqureader.domain.interactors.FetchPostsByIssueIdInteractor;
 import com.steve.wanqureader.domain.interactors.StarPostInteractor;
+import com.steve.wanqureader.domain.interactors.UnStarByPostNumInteractor;
 import com.steve.wanqureader.domain.interactors.impl.FetchPostsByIssueIdInteractorImpl;
 import com.steve.wanqureader.domain.interactors.impl.StarPostInteractorImpl;
+import com.steve.wanqureader.domain.interactors.impl.UnStarByPostNumInteractorImpl;
 import com.steve.wanqureader.domain.repository.PostRepository;
 import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.presentation.presenters.SearchPresenter;
@@ -20,7 +22,8 @@ import java.util.ArrayList;
 public class SearchPresenterImpl extends AbstractPresenter
         implements SearchPresenter,
         FetchPostsByIssueIdInteractor.Callback,
-        StarPostInteractor.Callback {
+        StarPostInteractor.Callback,
+        UnStarByPostNumInteractor.Callback {
 
     private SearchPresenter.View mView;
     private PostRepository mPostRepository;
@@ -67,6 +70,23 @@ public class SearchPresenterImpl extends AbstractPresenter
     @Override
     public void onPostStarred() {
         mView.onPostStarred();
+    }
+
+    @Override
+    public void unStarPost(int id) {
+        UnStarByPostNumInteractorImpl interactor = new UnStarByPostNumInteractorImpl(
+                mExecutor,
+                mMainThread,
+                id,
+                mPostRepository,
+                this
+        );
+        interactor.execute();
+    }
+
+    @Override
+    public void onPostUnstarred() {
+        mView.onPostUnStarred();
     }
 
     @Override

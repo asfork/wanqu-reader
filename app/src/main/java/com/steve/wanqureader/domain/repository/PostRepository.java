@@ -27,4 +27,6 @@ public interface PostRepository {
     List<StarredPost> getStarredPostsList();
 
     StarredPost getStarredPostbyId(long id);
+
+    StarredPost getStarredPostByNum(int num);
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -34,12 +35,13 @@
                 android:textSize="@dimen/text_size_vsmall" />
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/ib_star"
+        <com.like.LikeButton
+            android:id="@+id/likebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_post_bookmark_border_red_24dp"
-            android:background="@android:color/transparent" />
+            app:icon_type="star"
+            app:icon_size="16dp"
+            app:anim_scale_factor="2" />
     </LinearLayout>
 
     <TextView

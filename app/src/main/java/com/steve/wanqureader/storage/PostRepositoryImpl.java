@@ -55,6 +55,11 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public StarredPost getStarredPostByNum(int num) {
+        return StarredPost.find(StarredPost.class, "POSTNUM = ?", String.valueOf(num)).get(0);
+    }
+
+    @Override
     public List<StarredPost> getStarredPostsList() {
 //        return StarredPost.findWithQuery(StarredPost.class,
 //                "SELECT * FROM STARRED_POST ORDER BY STARREDDATE DESC", null);

@@ -20,9 +20,15 @@ public interface SearchPresenter extends BasePresenter {
         void onClickStarPost(Post post);
 
         void onPostStarred();
+
+        void onClickUnStarPost(int id);
+
+        void onPostUnStarred();
     }
 
     void fetchPostsByIssueId(int issueId);
 
     void starPost(Post post);
+
+    void unStarPost(int id);
 }

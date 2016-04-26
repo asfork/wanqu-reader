@@ -11,9 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.network.model.Post;
 import com.steve.wanqureader.presentation.presenters.SearchPresenter;
@@ -67,10 +68,15 @@ public class SearchPostsAdapter extends RecyclerView.Adapter<SearchPostsAdapter.
                 post.getReadTimeMinutes()));
         holder.titleView.setText(post.getReadableTitle());
         holder.articleView.setText(post.getReadableArticle());
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+        holder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
-            public void onClick(View v) {
+            public void liked(LikeButton likeButton) {
                 mView.onClickStarPost(post);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                mView.onClickUnStarPost(post.getPostNo());
             }
         });
     }
@@ -96,8 +102,8 @@ public class SearchPostsAdapter extends RecyclerView.Adapter<SearchPostsAdapter.
         TextView articleView;
         @Bind(R.id.tv_header_info)
         TextView infoView;
-        @Bind(R.id.ib_star)
-        ImageButton imageButton;
+        @Bind(R.id.likebutton)
+        LikeButton likeButton;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {
             super(view);
