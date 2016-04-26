@@ -7,7 +7,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="snackbar_grade">Star success</string>
+    <string name="snackbar_star">Star success</string>
+    <string name="snackbar_unstar">UnStar success</string>
     <string name="snackbar_close">Close</string>
     <string name="snackbar_search">Please input correct issue number</string>
     <string name="snackbar_no_issue">Couldn\'t find the issue</string>
@@ -35,6 +36,13 @@
 
     <!--post-->
     <string name="post_info">%1$s・%2$d min read</string>
+    <string name="date_just_now">just now</string>
+    <string name="date_minute">%d min ago</string>
+    <string name="date_hour">%d hrs ago</string>
+    <string name="date_yesterday">yesterday</string>
+    <string name="date_day">%d days ago</string>
+    <string name="date_month">MMM d</string>
+    <string name="date_year">MMM d, yyyy</string>
 
     <string name="issue_title">%1$s Issue %2$s</string>
 </resources>

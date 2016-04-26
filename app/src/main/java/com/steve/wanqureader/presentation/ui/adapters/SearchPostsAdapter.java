@@ -64,7 +64,7 @@ public class SearchPostsAdapter extends RecyclerView.Adapter<SearchPostsAdapter.
 
         holder.domainView.setText(post.getUrlDomain());
         holder.infoView.setText(String.format(info,
-                DateUtil.displayTime(post.getCreationDate()),
+                DateUtil.formatDateTime(post.getCreationDate()),
                 post.getReadTimeMinutes()));
         holder.titleView.setText(post.getReadableTitle());
         holder.articleView.setText(post.getReadableArticle());

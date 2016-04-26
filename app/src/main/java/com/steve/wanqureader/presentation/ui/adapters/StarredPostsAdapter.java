@@ -62,7 +62,7 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
 
         holder.domainView.setText(post.getUrlDomain());
         holder.infoView.setText(String.format(info,
-                DateUtil.displayTime(post.getCreationDate()),
+                DateUtil.formatDateTime(post.getCreationDate()),
                 post.getReadTimeMinutes()));
         holder.titleView.setText(post.getReadableTitle());
         holder.articleView.setText(post.getReadablerAticle());

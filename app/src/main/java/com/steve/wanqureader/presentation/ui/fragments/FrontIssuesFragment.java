@@ -69,7 +69,7 @@ public class FrontIssuesFragment extends BaseFragment implements FrontIssuesPres
                 String title = getString(R.string.issue_title);
 
                 viewHelper.setText(R.id.tv_title, String.format(title,
-                        DateUtil.displayTime(model.getCreationDate()),
+                        DateUtil.formatTitleDate(model.getCreationDate()),
                         model.getIssueNo()));
                 viewHelper.setText(R.id.tv_article, model.getReadableTitle());
             }

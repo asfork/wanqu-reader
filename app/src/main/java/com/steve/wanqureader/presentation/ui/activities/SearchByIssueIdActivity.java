@@ -184,9 +184,9 @@ public class SearchByIssueIdActivity extends BaseActivity
         mSearchView.onActionViewCollapsed();
         if (!posts.isEmpty()) {
             String title = getString(R.string.issue_title);
-            mToolbar.setTitle(String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()),
+            mToolbar.setTitle(String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()),
                     posts.get(0).getIssue()));
-            Log.d(TAG, String.format(title, DateUtil.displayTime(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
+            Log.d(TAG, String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
         } else {
             setTitle("");
             Log.d(TAG, getString(R.string.snackbar_no_issue));

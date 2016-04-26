@@ -71,7 +71,7 @@ public class PostsFragment extends BaseFragment
 
                 viewHelper.setText(R.id.tv_header_domain, post.getUrlDomain());
                 viewHelper.setText(R.id.tv_header_info, String.format(info,
-                        DateUtil.displayTime(post.getCreationDate()),
+                        DateUtil.formatDateTime(post.getCreationDate()),
                         post.getReadTimeMinutes()));
                 viewHelper.setText(R.id.tv_title, post.getReadableTitle());
                 viewHelper.setText(R.id.tv_article, post.getReadableArticle());
