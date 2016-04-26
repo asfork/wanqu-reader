@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">湾区阅读</string>
+    <string name="app_info">保持专注</string>
+    <string name="app_description">关注互联网、创业、技术，每天更新5篇优质英文文章和评论</string>
+
+    <string name="navigation_drawer_open">打开导航栏</string>
+    <string name="navigation_drawer_close">关闭导航栏</string>
+
+    <string name="snackbar_star">收藏成功</string>
+    <string name="snackbar_unstar">从收藏移除</string>
+    <string name="snackbar_close">关闭</string>
+    <string name="snackbar_search">请输入正确的期号</string>
+    <string name="snackbar_no_issue">找不到这一期</string>
+
+    <string name="action_search">搜索</string>
+    <string name="action_share">分享</string>
+    <string name="action_about">关于</string>
+    <string name="action_issues">反馈</string>
+
+    <string name="nav_header_title">湾区日报</string>
+    <string name="nav_header_content">wanqu.co</string>
+    <string name="nav_latest">最新文章</string>
+    <string name="nav_likes">收藏夹</string>
+    <string name="nav_sleep_mode">切换主题</string>
+    <string name="nav_about">关于</string>
+    <string name="nav_archives">往期</string>
+    <string name="nav_settings">设置</string>
+
+    <string name="activity_about">关于</string>
+    <string name="activity_front_issues">往期</string>
+    <string name="activity_starred">收藏</string>
+
+    <string name="button_random">试试手气</string>
+    <string name="progress_view">载入更多</string>
+
+    <!--post-->
+    <string name="post_info">%1$s・%2$d分钟读完</string>
+
+    <string name="issue_title">%1$s 第%2$s期</string>
+    <string name="date_day">%d天前</string>
+    <string name="date_hour">%d小时前</string>
+    <string name="date_just_now">刚刚</string>
+    <string name="date_minute">%d分钟前</string>
+    <string name="date_month">M月d日</string>
+    <string name="date_year">yyyy年M月d日</string>
+    <string name="date_yesterday">昨天</string>
+
+</resources>
