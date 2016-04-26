@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebSettings;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.utils.Constant;
@@ -26,18 +29,19 @@ public class WebViewActivity extends BaseActivity {
     private ShareActionProvider mShareActionProvider;
     private Intent mShareIntent;
     private String url;
-    private String slug;
+    private String mTitle;
 
     @Bind(R.id.linear_layout)
     LinearLayout mLinearLayout;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.web_view)
+    @Bind(R.id.webview)
     WebView mWebView;
+    @Bind(R.id.progressbar)
+    ProgressBar mProgressBar;
 
-    public static void actionStart(Context context, String slug, String url) {
+    public static void actionStart(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(Constant.EXTRA_SLUG, slug);
         intent.putExtra(Constant.EXTRA_URL, url);
         context.startActivity(intent);
     }
@@ -49,19 +53,39 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        slug = getIntent().getStringExtra(Constant.EXTRA_SLUG);
         url = getIntent().getStringExtra(Constant.EXTRA_URL);
         mShareIntent = new Intent(Intent.ACTION_SEND);
         mShareIntent.setType(Constant.SHARE_TYPE);
         mShareIntent.putExtra(Intent.EXTRA_TEXT, url);
 
-        mToolbar.setTitle(slug);
         setSupportActionBar(mToolbar);
         // back to home
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int progress) {
+                if (mProgressBar != null) {
+                    mProgressBar.setProgress(progress);
+                    if (progress == 100) {
+                        Log.d(TAG, "load done");
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                Log.d(TAG, "TITLE=" + title);
+                setTitle(title);
+            }
+
+        });
+
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -70,12 +94,10 @@ public class WebViewActivity extends BaseActivity {
                 return true;
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         mWebView.loadUrl(url);
+        mProgressBar.setProgress(0);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -109,8 +131,9 @@ public class WebViewActivity extends BaseActivity {
         super.onDestroy();
 
         if (mLinearLayout != null && mWebView != null) {
-            mLinearLayout.removeAllViews();
             mWebView.destroy();
+            mWebView = null;
+            mLinearLayout.removeAllViews();
         }
     }
 }

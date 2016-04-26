@@ -24,7 +24,7 @@ public class AboutActivity extends BaseActivity {
     LinearLayout mLinearLayout;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.web_view)
+    @Bind(R.id.webview)
     WebView mWebView;
 
     public static void actionStart(Context context) {

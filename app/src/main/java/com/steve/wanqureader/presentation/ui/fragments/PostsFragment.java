@@ -164,7 +164,7 @@ public class PostsFragment extends BaseFragment
 //        CustomTabActivityHelper.openCustomTab(getActivity(), customTabsIntent,
 //                Uri.parse(url), new WebviewFallback());
 
-        WebViewActivity.actionStart(mContext, slug, url);
+        WebViewActivity.actionStart(mContext, url);
     }
 
     @Override

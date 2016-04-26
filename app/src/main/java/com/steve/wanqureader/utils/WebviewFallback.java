@@ -11,6 +11,6 @@ import com.steve.wanqureader.presentation.ui.activities.WebViewActivity;
 public class WebviewFallback implements CustomTabActivityHelper.CustomTabFallback {
     @Override
     public void openUri(Activity activity, Uri uri) {
-        WebViewActivity.actionStart(activity, "", uri.toString());
+        WebViewActivity.actionStart(activity, uri.toString());
     }
 }
