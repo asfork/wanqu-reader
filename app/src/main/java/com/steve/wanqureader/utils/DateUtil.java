@@ -50,7 +50,7 @@ public class DateUtil {
         } else if (isOneWeek(dateTime, calendar.getTimeInMillis())) {
             return String.format(Locale.getDefault(),
                     WanquApplication.getContext().getString(R.string.date_day),
-                    Math.abs(dateTime - calendar.getTimeInMillis()) / (24 * 60 * 60 * 1000) + 1);
+                    Math.abs(dateTime - calendar.getTimeInMillis()) / (24 * 60 * 60 * 1000));
         } else if (isSameYear(dateTime)) {
             text = WanquApplication.getContext().getString(R.string.date_month);
         } else {
