@@ -25,3 +25,6 @@ public static int w(...);
 public static int d(...);
 public static int e(...);
 }
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

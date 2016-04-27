@@ -6,6 +6,7 @@ import android.content.Context;
 import com.orm.SugarContext;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by steve on 3/28/16.
@@ -18,6 +19,7 @@ public class WanquApplication extends Application {
         super.onCreate();
         LeakCanary.install(this);
         mContext = getApplicationContext();
+        CrashReport.initCrashReport(getApplicationContext());
         SugarContext.init(this);
     }
 
