@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.stephentuso.welcome.ui.WelcomeActivity;
 import com.steve.wanqureader.R;
@@ -79,6 +81,11 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
         mNavView.setNavigationItemSelectedListener(this);
+
+        AppUpdater appUpdater = new AppUpdater(this);
+        appUpdater.setUpdateFrom(UpdateFrom.XML)
+                .setUpdateXML(Constant.UPDATE_URL)
+                .start();
     }
 
     @Override

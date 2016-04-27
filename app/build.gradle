@@ -11,7 +11,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "6.4.27"
     }
     buildTypes {
         release {
@@ -45,6 +45,7 @@ dependencies {
     compile 'com.stephentuso:welcome:0.6.1'
 
     compile 'com.github.jd-alexander:LikeButton:0.2.0'
+    compile 'com.github.javiersantos:AppUpdater:2.1'
 }
 
 // about.html is templatized so that we can automatically insert
