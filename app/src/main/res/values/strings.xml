@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wanqu Reader</string>
-    <string name="app_info">Stay Focused</string>
     <string name="app_description">Concerned about the Internet, startup, technology. Push 5 quality articles and reviews every day.</string>
+    <string name="app_ad">Stay Focused</string>
+    <string name="app_ad_info">By makers, for makers</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

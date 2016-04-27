@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">湾区阅读</string>
-    <string name="app_info">保持专注</string>
+    <string name="app_ad">不分心</string>
     <string name="app_description">关注互联网、创业、技术，每天更新5篇优质英文文章和评论</string>
 
     <string name="navigation_drawer_open">打开导航栏</string>
@@ -45,5 +45,6 @@
     <string name="date_month">M月d日</string>
     <string name="date_year">yyyy年M月d日</string>
     <string name="date_yesterday">昨天</string>
+    <string name="app_ad_info">不多不少，为你挑选有质量的知识和灵感</string>
 
 </resources>
