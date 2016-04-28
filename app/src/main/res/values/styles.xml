@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/orange500</item>
         <item name="colorPrimaryDark">@color/orange700</item>
         <item name="colorAccent">@color/redA200</item>
@@ -9,13 +9,18 @@
         <item name="android:textColorSecondary">@color/grey500</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="BaseAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/orange300</item>
         <item name="colorPrimaryDark">@color/orange500</item>
         <item name="colorAccent">@color/redA100</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/grey500</item>
     </style>
+
+
+    <style name="AppTheme" parent="@style/BaseAppTheme" />
+
+    <style name="AppTheme.Dark" parent="@style/BaseAppTheme.Dark" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
