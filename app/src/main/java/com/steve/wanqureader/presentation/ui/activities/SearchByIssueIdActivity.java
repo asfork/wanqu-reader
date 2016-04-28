@@ -114,7 +114,7 @@ public class SearchByIssueIdActivity extends BaseActivity
          * 当用户按下它的时候才显示search box . 你可以调用setIconifiedByDefault(false)让search
          * box默认都被显示。 你也可以调用setIconified()让它以iconified“的形式显示。
          */
-//        mSearchView.setIconifiedByDefault(false);
+//        mSearchView.setIconifiedByDefault(true);
         /**
          * 默认情况下是没提交搜索的按钮，所以用户必须在键盘上按下"enter"键来提交搜索.你可以同过setSubmitButtonEnabled(
          * true)来添加一个提交按钮（"submit" button)
@@ -122,6 +122,7 @@ public class SearchByIssueIdActivity extends BaseActivity
          */
 //        mSearchView.setSubmitButtonEnabled(true);
 
+        mSearchView.setMaxWidth((int) getResources().getDimension(R.dimen.searchview_max_width));
         if (mIssueId == 0) mSearchView.onActionViewExpanded();
         mSearchView.setOnQueryTextListener(this);
         return true;
