@@ -8,10 +8,9 @@ package com.steve.wanqureader.utils;
  */
 public class Constant {
     public static final String SITE_URL = "https://wanqu.co";
-    public static final String BASE_API_URL = "http://162.243.150.140/api/v1/";
+    public static final String BASE_API_URL = "http://45.78.36.207/api/v1/";
     public static final String UPDATE_URL = "https://raw.githubusercontent.com/uhy/wanqu-reader/master/app/update-changelog.xml";
 
-    public static final String EXTRA_SLUG = "extra.slug";
     public static final String EXTRA_URL = "extra.url";
     public static final String EXTRA_ISSUE_NUMBER = "extra.issueNum";
 
