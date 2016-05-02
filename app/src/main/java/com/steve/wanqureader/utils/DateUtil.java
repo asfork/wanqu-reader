@@ -30,8 +30,8 @@ public class DateUtil {
                         WanquApplication.getContext().getString(R.string.date_minute),
                         Math.abs(dateTime - calendar.getTimeInMillis()) / (60 * 1000));
             } else {
-                calendar.setTimeInMillis(dateTime);
-                int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+//                calendar.setTimeInMillis(dateTime);
+//                int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
 //                if (hourOfDay > 17) {
 //                    text = "晚上 hh:mm";
 //                } else if (hourOfDay >= 0 && hourOfDay <= 6) {
