@@ -19,25 +19,22 @@ import android.widget.ProgressBar;
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.utils.Constant;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by steve on 4/8/16.
  */
 public class WebViewActivity extends BaseActivity {
     private static final String TAG = "WebViewActivity";
-    private ShareActionProvider mShareActionProvider;
     private Intent mShareIntent;
-    private String url;
-    private String mTitle;
 
-    @Bind(R.id.linear_layout)
+    @BindView(R.id.linear_layout)
     LinearLayout mLinearLayout;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView mWebView;
-    @Bind(R.id.progressbar)
+    @BindView(R.id.progressbar)
     ProgressBar mProgressBar;
 
     public static void actionStart(Context context, String url) {
@@ -53,7 +50,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        url = getIntent().getStringExtra(Constant.EXTRA_URL);
+        String url = getIntent().getStringExtra(Constant.EXTRA_URL);
         mShareIntent = new Intent(Intent.ACTION_SEND);
         mShareIntent.setType(Constant.SHARE_TYPE);
         mShareIntent.putExtra(Intent.EXTRA_TEXT, url);
@@ -107,7 +104,7 @@ public class WebViewActivity extends BaseActivity {
         // Locate MenuItem with ShareActionProvider
         MenuItem item = menu.findItem(R.id.action_share);
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         // Connect the dots: give the ShareActionProvider its Share Intent
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(mShareIntent);

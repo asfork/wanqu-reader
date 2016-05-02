@@ -23,7 +23,7 @@ import com.steve.wanqureader.utils.DateUtil;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -94,15 +94,15 @@ public class SearchPostsAdapter extends RecyclerView.Adapter<SearchPostsAdapter.
     public final static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RecyclerViewClickListener mListener;
 
-        @Bind(R.id.tv_header_domain)
+        @BindView(R.id.tv_header_domain)
         TextView domainView;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView titleView;
-        @Bind(R.id.tv_article)
+        @BindView(R.id.tv_article)
         TextView articleView;
-        @Bind(R.id.tv_header_info)
+        @BindView(R.id.tv_header_info)
         TextView infoView;
-        @Bind(R.id.likebutton)
+        @BindView(R.id.likebutton)
         LikeButton likeButton;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {

@@ -2,6 +2,7 @@ package com.steve.wanqureader.presentation.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
@@ -34,7 +35,11 @@ import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindColor;
+import butterknife.BindDimen;
+import butterknife.BindDrawable;
+import butterknife.BindString;
+import butterknife.BindView;
 
 /**
  * Created by steve on 3/23/16.
@@ -47,12 +52,38 @@ public class SearchByIssueIdActivity extends BaseActivity
     private SearchView mSearchView;
     private int mIssueId;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.google_progress)
+    @BindView(R.id.google_progress)
     GoogleCircleProgressView mProgressView;
+
+    @BindString(R.string.snackbar_search)
+    String issueNumberError;
+    @BindString(R.string.snackbar_no_issue)
+    String issueNumberNone;
+    @BindString(R.string.snackbar_star)
+    String postStarred;
+    @BindString(R.string.snackbar_unstar)
+    String postUnStarred;
+    @BindString(R.string.issue_title)
+    String issueTitle;
+
+    @BindColor(R.color.google_blue)
+    int blue;
+    @BindColor(R.color.google_red)
+    int red;
+    @BindColor(R.color.google_yellow)
+    int yellow;
+    @BindColor(R.color.google_green)
+    int green;
+
+    @BindDrawable(R.drawable.divider)
+    Drawable divider;
+
+    @BindDimen(R.dimen.searchview_max_width)
+    int maxWidth;
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, SearchByIssueIdActivity.class);
@@ -73,18 +104,17 @@ public class SearchByIssueIdActivity extends BaseActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mProgressView.setColorSchemeResources(
-                R.color.google_blue,
-                R.color.google_red,
-                R.color.google_yellow,
-                R.color.google_green);
+                blue,
+                red,
+                yellow,
+                green);
         mProgressView.setStartEndTrim(0, (float) 0.75);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         // allows for optimizations if all items are of the same size
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(
-                getResources().getDrawable(R.drawable.divider)));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(divider));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new SearchPostsAdapter(this, this);
@@ -122,7 +152,7 @@ public class SearchByIssueIdActivity extends BaseActivity
          */
 //        mSearchView.setSubmitButtonEnabled(true);
 
-        mSearchView.setMaxWidth((int) getResources().getDimension(R.dimen.searchview_max_width));
+        mSearchView.setMaxWidth(maxWidth);
         if (mIssueId == 0) mSearchView.onActionViewExpanded();
         mSearchView.setOnQueryTextListener(this);
         return true;
@@ -161,9 +191,9 @@ public class SearchByIssueIdActivity extends BaseActivity
                 if (StringUtil.isNumeric(query)) {
                     mSearchPresenter.fetchPostsByIssueId(Integer.parseInt(query));
                 } else {
-                    Log.d(TAG, getString(R.string.snackbar_search));
+                    Log.d(TAG, issueNumberError);
                     Snackbar.make(mRecyclerView,
-                            getString(R.string.snackbar_search),
+                            issueNumberError,
                             Snackbar.LENGTH_SHORT).show();
                 }
                 // 输入法如果是显示状态，那么就隐藏输入法
@@ -184,15 +214,15 @@ public class SearchByIssueIdActivity extends BaseActivity
         mAdapter.refreshPosts(posts);
         mSearchView.onActionViewCollapsed();
         if (!posts.isEmpty()) {
-            String title = getString(R.string.issue_title);
+            String title = issueTitle;
             mToolbar.setTitle(String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()),
                     posts.get(0).getIssue()));
             Log.d(TAG, String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
         } else {
             setTitle("");
-            Log.d(TAG, getString(R.string.snackbar_no_issue));
+            Log.d(TAG, issueNumberNone);
             Snackbar.make(mRecyclerView,
-                    getString(R.string.snackbar_no_issue),
+                    issueNumberNone,
                     Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -211,7 +241,7 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     public void onPostStarred() {
-        Snackbar.make(mRecyclerView, getString(R.string.snackbar_star), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mRecyclerView, postStarred, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -221,7 +251,7 @@ public class SearchByIssueIdActivity extends BaseActivity
 
     @Override
     public void onPostUnStarred() {
-        Snackbar.make(mRecyclerView, getString(R.string.snackbar_unstar), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mRecyclerView, postUnStarred, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

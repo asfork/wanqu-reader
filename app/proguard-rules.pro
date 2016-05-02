@@ -28,3 +28,31 @@ public static int e(...);
 
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+#-keepattributes Annotation
+#-keep class okhttp3.** { *; }
+#-keep interface okhttp3.* { *; }
+#-dontwarn okhttp3.*
+
+# Retain generated class which implement ViewBinder.
+-keep public class * implements butterknife.internal.ViewBinder { public <init>(); }
+
+# Prevent obfuscation of types which use ButterKnife annotations since the simple name
+# is used to reflectively look up the generated ViewBinder.
+-keep class butterknife.*
+-keepclasseswithmembernames class * { @butterknife.* <methods>; }
+-keepclasseswithmembernames class * { @butterknife.* <fields>; }
+
+# Ensures entities remain un-obfuscated so table and columns are named correctly
+-keep class com.steve.wanqureader.network.model.** { *; }
+
+-keepclassmembers class * extends com.stephentuso.welcome.ui.WelcomeActivity {
+    public static java.lang.String welcomeKey();
+}
+
+-keepattributes InnerClasses

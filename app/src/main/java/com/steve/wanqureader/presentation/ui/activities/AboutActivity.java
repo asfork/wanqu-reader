@@ -12,7 +12,9 @@ import android.widget.LinearLayout;
 
 import com.steve.wanqureader.R;
 
-import butterknife.Bind;
+import butterknife.BindString;
+import butterknife.BindView;
+
 
 /**
  * Created by steve on 4/15/16.
@@ -20,12 +22,14 @@ import butterknife.Bind;
 public class AboutActivity extends BaseActivity {
     private static final String TAG = "AboutActivity";
 
-    @Bind(R.id.linear_layout)
+    @BindView(R.id.linear_layout)
     LinearLayout mLinearLayout;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView mWebView;
+    @BindString(R.string.activity_about)
+    String mTitle;
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, AboutActivity.class);
@@ -39,7 +43,7 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        mToolbar.setTitle(getString(R.string.activity_about));
+        mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
         // back to home
         assert getSupportActionBar() != null;

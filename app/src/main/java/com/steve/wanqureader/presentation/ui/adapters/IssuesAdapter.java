@@ -16,7 +16,7 @@ import com.steve.wanqureader.presentation.ui.listeners.RecyclerViewClickListener
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -74,9 +74,9 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RecyclerViewClickListener mListener;
 
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView titleView;
-        @Bind(R.id.tv_article)
+        @BindView(R.id.tv_article)
         TextView summaryView;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {

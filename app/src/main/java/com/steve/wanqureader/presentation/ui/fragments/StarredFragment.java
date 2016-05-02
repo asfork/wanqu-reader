@@ -22,7 +22,7 @@ import com.steve.wanqureader.utils.WebviewFallback;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by steve on 3/22/16.
@@ -32,7 +32,7 @@ public class StarredFragment extends BaseFragment implements StarredPresenter.Vi
     private StarredPostsAdapter mAdapter;
     private StarredPresenter mStarredPresenter;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     @Override

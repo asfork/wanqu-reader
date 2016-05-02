@@ -22,10 +22,4 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void initView(Bundle savedInstanceState);
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);//解除绑定，官方文档只对fragment做了解绑
-    }
 }

@@ -1,5 +1,6 @@
 package com.steve.wanqureader.presentation.ui.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,7 +29,8 @@ import com.steve.wanqureader.utils.DateUtil;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindDrawable;
+import butterknife.BindView;
 
 /**
  * ; * Created by steve on 16-4-13.
@@ -44,10 +46,13 @@ public class PostsFragment extends BaseFragment
     private PostsPresenter mPostsPresenter;
     private int page = 1;
 
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     CanRefreshLayout mCanRefreshLayout;
-    @Bind(R.id.can_content_view)
+    @BindView(R.id.can_content_view)
     RecyclerView mRecyclerView;
+
+    @BindDrawable(R.drawable.divider)
+    Drawable divider;
 
     @Override
     public int getContentViewId() {
@@ -94,8 +99,7 @@ public class PostsFragment extends BaseFragment
             }
         };
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(
-                getResources().getDrawable(R.drawable.divider)));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(divider));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
 

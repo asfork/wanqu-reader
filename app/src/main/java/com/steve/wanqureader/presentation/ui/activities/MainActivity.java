@@ -16,10 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.stephentuso.welcome.ui.WelcomeActivity;
@@ -29,7 +27,7 @@ import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
 import com.steve.wanqureader.presentation.ui.fragments.StarredFragment;
 import com.steve.wanqureader.utils.Constant;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -44,11 +42,11 @@ public class MainActivity extends BaseActivity
     private Fragment curFragment;
     private SharedPreferences pref;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
 
     @Override

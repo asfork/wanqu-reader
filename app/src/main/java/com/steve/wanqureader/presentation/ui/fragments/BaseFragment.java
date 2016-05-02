@@ -37,7 +37,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);//解绑
 //        RefWatcher refWatcher = WanquApplication.getRefWatcher(getActivity());
 //        refWatcher.watch(this);
     }

@@ -17,7 +17,7 @@ import com.steve.wanqureader.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -89,15 +89,15 @@ public class StarredPostsAdapter extends RecyclerView.Adapter<StarredPostsAdapte
             implements View.OnClickListener {
         private RecyclerViewClickListener mListener;
 
-        @Bind(R.id.tv_header_domain)
+        @BindView(R.id.tv_header_domain)
         TextView domainView;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView titleView;
-        @Bind(R.id.tv_article)
+        @BindView(R.id.tv_article)
         TextView articleView;
-        @Bind(R.id.tv_header_info)
+        @BindView(R.id.tv_header_info)
         TextView infoView;
-        @Bind(R.id.ib_star)
+        @BindView(R.id.ib_star)
         ImageButton imageButton;
 
         public ViewHolder(View view, final RecyclerViewClickListener listener) {
