@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.stephentuso.welcome.ui.WelcomeActivity;
@@ -92,11 +94,16 @@ public class MainActivity extends BaseActivity
         mNavView.setNavigationItemSelectedListener(this);
 
         AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
+                .setUpdateFrom(UpdateFrom.XML)
                 .setUpdateXML(Constant.UPDATE_URL)
                 .withListener(new AppUpdaterUtils.UpdateListener() {
                                   @Override
                                   public void onSuccess(Update update, Boolean isUpdateAvailable) {
-                                      Log.d("AppUpdater", update.getLatestVersion() + ", " + update.getUrlToDownload() + ", " + Boolean.toString(isUpdateAvailable));
+                                      Log.d("AppUpdater", update.getLatestVersion()
+                                              + ", " + update.getUrlToDownload()
+                                              + ", " + Boolean.toString(isUpdateAvailable));
+
+                                      updateApp();
                                   }
 
                                   @Override
@@ -107,22 +114,29 @@ public class MainActivity extends BaseActivity
         appUpdaterUtils.start();
     }
 
+    private void updateApp() {
+        AppUpdater appUpdater = new AppUpdater(this);
+        appUpdater.setUpdateFrom(UpdateFrom.XML)
+                .setUpdateXML(Constant.UPDATE_URL);
+        appUpdater.start();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == WelcomeScreenHelper.DEFAULT_WELCOME_SCREEN_REQUEST) {
-            String welcomeKey = data.getStringExtra(WelcomeActivity.WELCOME_SCREEN_KEY);
+//            String welcomeKey = data.getStringExtra(WelcomeActivity.WELCOME_SCREEN_KEY);
             SharedPreferences.Editor editor = pref.edit();
 
             if (resultCode == RESULT_OK) {
                 editor.putBoolean(isFirstLaunch, false);
                 editor.putBoolean(isSkipWelcome, false);
-                Log.d(TAG, welcomeKey + " completed");
+//                Log.d(TAG, welcomeKey + " completed");
             } else {
                 editor.putBoolean(isFirstLaunch, false);
                 editor.putBoolean(isSkipWelcome, true);
-                Log.d(TAG, welcomeKey + " canceled");
+//                Log.d(TAG, welcomeKey + " canceled");
             }
             editor.apply();
         }
