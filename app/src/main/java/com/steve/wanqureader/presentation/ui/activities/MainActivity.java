@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
@@ -27,6 +29,7 @@ import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
 import com.steve.wanqureader.presentation.ui.fragments.StarredFragment;
 import com.steve.wanqureader.utils.Constant;
 
+import butterknife.BindString;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity
@@ -48,6 +51,11 @@ public class MainActivity extends BaseActivity
     DrawerLayout mDrawer;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
+    @BindView(R.id.frame_layout)
+    FrameLayout mFrameLayout;
+
+    @BindString(R.string.snackbar_no_email_client)
+    String noEmailclient;
 
     @Override
     public int getContentViewId() {
@@ -101,7 +109,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == WelcomeScreenHelper.DEFAULT_WELCOME_SCREEN_REQUEST) {
             String welcomeKey = data.getStringExtra(WelcomeActivity.WELCOME_SCREEN_KEY);
@@ -151,7 +159,13 @@ public class MainActivity extends BaseActivity
             Intent data = new Intent(Intent.ACTION_SENDTO);
             data.setData(Uri.parse(Constant.ISSUES_EMAIL));
             data.putExtra(Intent.EXTRA_SUBJECT, Constant.ISSUES_TITLE);
-            startActivity(data);
+
+            if (data.resolveActivity(getPackageManager()) != null) {
+                startActivity(data);
+            } else {
+                Snackbar.make(mFrameLayout, noEmailclient, Snackbar.LENGTH_SHORT).show();
+            }
+
 
         } else if (id == R.id.action_search) {
             SearchByIssueIdActivity.actionStart(this);

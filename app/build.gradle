@@ -12,18 +12,23 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "6.5.2"
+        versionName "6.5.6"
+        manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "github"]
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
     buildTypes {
+        debug{
+            manifestPlaceholders = [BUGLY_ENABLE_DEBUG: "true"]
+        }
         release {
             minifyEnabled false
             // 移除无用的resource文件
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [BUGLY_ENABLE_DEBUG: "false"]
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
@@ -37,12 +42,12 @@ android {
         }
     }
     productFlavors {
-        github {
-            manifestPlaceholders = [APP_CHANNEL_VALUE: "github"]
-        }
-        wandoujia {
-            manifestPlaceholders = [APP_CHANNEL_VALUE: "wandoujia"]
-        }
+        github {}
+        wandoujia {}
+        coolapk {}
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [BUGLY_CHANNEL_VALUE: name]
     }
 }
 

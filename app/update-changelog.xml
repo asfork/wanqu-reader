@@ -1,10 +1,9 @@
 <AppUpdater>
     <update>
-        <latestVersion>6.5.2</latestVersion>
+        <latestVersion>6.5.6</latestVersion>
         <url>https://github.com/uhy/wanqu-reader/releases</url>
         <releaseNotes>
-- Fix hours calculation error on the same day
-- Some optimization
+- Bug fixes and improved stability
         </releaseNotes>
     </update>
 </AppUpdater>

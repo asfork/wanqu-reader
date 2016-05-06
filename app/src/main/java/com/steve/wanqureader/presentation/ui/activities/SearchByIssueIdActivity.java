@@ -70,15 +70,6 @@ public class SearchByIssueIdActivity extends BaseActivity
     @BindString(R.string.issue_title)
     String issueTitle;
 
-    @BindColor(R.color.google_blue)
-    int blue;
-    @BindColor(R.color.google_red)
-    int red;
-    @BindColor(R.color.google_yellow)
-    int yellow;
-    @BindColor(R.color.google_green)
-    int green;
-
     @BindDrawable(R.drawable.divider)
     Drawable divider;
 
@@ -104,10 +95,10 @@ public class SearchByIssueIdActivity extends BaseActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mProgressView.setColorSchemeResources(
-                blue,
-                red,
-                yellow,
-                green);
+                R.color.google_blue,
+                R.color.google_red,
+                R.color.google_yellow,
+                R.color.google_green);
         mProgressView.setStartEndTrim(0, (float) 0.75);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
@@ -212,10 +203,10 @@ public class SearchByIssueIdActivity extends BaseActivity
     @Override
     public void showPosts(ArrayList<Post> posts) {
         mAdapter.refreshPosts(posts);
-        mSearchView.onActionViewCollapsed();
+        if (mSearchView != null) mSearchView.onActionViewCollapsed();
         if (!posts.isEmpty()) {
             String title = issueTitle;
-            mToolbar.setTitle(String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()),
+            setTitle(String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()),
                     posts.get(0).getIssue()));
             Log.d(TAG, String.format(title, DateUtil.formatTitleDate(posts.get(0).getCreationDate()), posts.get(0).getIssue()));
         } else {

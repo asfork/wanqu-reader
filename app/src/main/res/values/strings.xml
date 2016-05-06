@@ -13,6 +13,7 @@
     <string name="snackbar_close">Close</string>
     <string name="snackbar_search">Please input correct issue number</string>
     <string name="snackbar_no_issue">Couldn\'t find the issue</string>
+    <string name="snackbar_no_email_client">Please install email client</string>
 
     <string name="action_search">Search</string>
     <string name="action_share">Share</string>

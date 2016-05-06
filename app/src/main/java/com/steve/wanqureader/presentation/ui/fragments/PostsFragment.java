@@ -202,16 +202,18 @@ public class PostsFragment extends BaseFragment
 
     @Override
     public void onSetProgressBarVisibility(int statusCode) {
-        switch (statusCode) {
-            case Constant.PROGRESS_VISIBLE:
-                mCanRefreshLayout.autoRefresh();
-                break;
-            case Constant.PROGRESS_HEADER_INVISIBILITY:
-                mCanRefreshLayout.refreshComplete();
-                break;
-            case Constant.PROGRESS_FOOTER_INVISIBILITY:
-                mCanRefreshLayout.loadMoreComplete();
-                break;
+        if (mCanRefreshLayout != null) {
+            switch (statusCode) {
+                case Constant.PROGRESS_VISIBLE:
+                    mCanRefreshLayout.autoRefresh();
+                    break;
+                case Constant.PROGRESS_HEADER_INVISIBILITY:
+                    mCanRefreshLayout.refreshComplete();
+                    break;
+                case Constant.PROGRESS_FOOTER_INVISIBILITY:
+                    mCanRefreshLayout.loadMoreComplete();
+                    break;
+            }
         }
     }
 
