@@ -26,4 +26,8 @@ public class Constant {
     public static final int CACHE_SIZE = 10 * 1024 * 1024;
 
     public static final String SHARE_TYPE = "text/plain";
+
+    public static final String IS_FIRST_LAUNCH = "IS_FIRST_LAUNCH";
+    public static final String IS_SKIP_WELCOME = "IS_SKIP_WELCOME";
+    public static final String THEME_INDEX = "THEME_INDEX";
 }

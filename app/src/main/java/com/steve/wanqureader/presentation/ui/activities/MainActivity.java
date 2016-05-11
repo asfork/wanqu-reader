@@ -1,7 +1,7 @@
 package com.steve.wanqureader.presentation.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,11 +25,12 @@ import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.stephentuso.welcome.WelcomeScreenHelper;
-import com.stephentuso.welcome.ui.WelcomeActivity;
 import com.steve.wanqureader.R;
+import com.steve.wanqureader.WanquApplication;
 import com.steve.wanqureader.presentation.ui.fragments.FrontIssuesFragment;
 import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
 import com.steve.wanqureader.presentation.ui.fragments.StarredFragment;
+import com.steve.wanqureader.utils.ConfigUtil;
 import com.steve.wanqureader.utils.Constant;
 
 import butterknife.BindString;
@@ -37,15 +39,13 @@ import butterknife.BindView;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static final String TAG = "MainActivity";
-    private static final String fragmentPosts = "PostsFragment";
-    private static final String isFirstLaunch = "isFirstLaunch";
-    private static final String isSkipWelcome = "isSkipWelcome";
+    private static final String FRAGMENT_POSTS = "FRAGMENT_POSTS";
 
     private PostsFragment mPostFragment;
     private StarredFragment mStarredFragment;
     private FrontIssuesFragment mFrontIssuesFragment;
     private Fragment curFragment;
-    private SharedPreferences pref;
+    private AppUpdaterUtils appUpdaterUtils;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity
     FrameLayout mFrameLayout;
 
     @BindString(R.string.snackbar_no_email_client)
-    String noEmailclient;
+    String noEmailClient;
 
     @Override
     public int getContentViewId() {
@@ -66,10 +66,8 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        // First time launch, show welcome
-        pref = getSharedPreferences("data", MODE_PRIVATE);
-        if (pref.getBoolean(isFirstLaunch, true)) {
-            Log.d(TAG, isFirstLaunch + " is true");
+        if (ConfigUtil.getBoolean(Constant.IS_FIRST_LAUNCH, true)) {
+            Log.d(TAG, "IS_FIRST_LAUNCH is true");
             new WelcomeScreenHelper(this, MWelcomeActivity.class).show();
         }
 
@@ -80,7 +78,7 @@ public class MainActivity extends BaseActivity
             getSupportFragmentManager().beginTransaction().add(
                     R.id.frame_layout,
                     mPostFragment,
-                    fragmentPosts
+                    FRAGMENT_POSTS
             ).commit();
         }
 
@@ -93,25 +91,34 @@ public class MainActivity extends BaseActivity
 
         mNavView.setNavigationItemSelectedListener(this);
 
-        AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
-                .setUpdateFrom(UpdateFrom.XML)
-                .setUpdateXML(Constant.UPDATE_URL)
-                .withListener(new AppUpdaterUtils.UpdateListener() {
-                                  @Override
-                                  public void onSuccess(Update update, Boolean isUpdateAvailable) {
-                                      Log.d("AppUpdater", update.getLatestVersion()
-                                              + ", " + update.getUrlToDownload()
-                                              + ", " + Boolean.toString(isUpdateAvailable));
+        if (appUpdaterUtils == null) {
+            appUpdaterUtils = new AppUpdaterUtils(this)
+                    .setUpdateFrom(UpdateFrom.XML)
+                    .setUpdateXML(Constant.UPDATE_URL)
+                    .withListener(new AppUpdaterUtils.UpdateListener() {
+                        @Override
+                        public void onSuccess(Update update, Boolean isUpdateAvailable) {
+                            Log.d("AppUpdater", update.getLatestVersion()
+                                    + ", " + update.getUrlToDownload()
+                                    + ", " + Boolean.toString(isUpdateAvailable));
 
-                                      updateApp();
-                                  }
+                            updateApp();
+                        }
 
-                                  @Override
-                                  public void onFailed(AppUpdaterError error) {
-                                      Log.d("AppUpdater", "Something went wrong");
-                                  }
-                              });
-        appUpdaterUtils.start();
+                        @Override
+                        public void onFailed(AppUpdaterError error) {
+                            Log.d("AppUpdater", "Something went wrong");
+                        }
+                    });
+            appUpdaterUtils.start();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+
+        WanquApplication.refreshResources(this);
+        super.onResume();
     }
 
     private void updateApp() {
@@ -127,18 +134,16 @@ public class MainActivity extends BaseActivity
 
         if (requestCode == WelcomeScreenHelper.DEFAULT_WELCOME_SCREEN_REQUEST) {
 //            String welcomeKey = data.getStringExtra(WelcomeActivity.WELCOME_SCREEN_KEY);
-            SharedPreferences.Editor editor = pref.edit();
 
             if (resultCode == RESULT_OK) {
-                editor.putBoolean(isFirstLaunch, false);
-                editor.putBoolean(isSkipWelcome, false);
+                ConfigUtil.putBoolean(Constant.IS_FIRST_LAUNCH, false);
+                ConfigUtil.putBoolean(Constant.IS_SKIP_WELCOME, false);
 //                Log.d(TAG, welcomeKey + " completed");
             } else {
-                editor.putBoolean(isFirstLaunch, false);
-                editor.putBoolean(isSkipWelcome, true);
+                ConfigUtil.putBoolean(Constant.IS_FIRST_LAUNCH, false);
+                ConfigUtil.putBoolean(Constant.IS_SKIP_WELCOME, true);
 //                Log.d(TAG, welcomeKey + " canceled");
             }
-            editor.apply();
         }
     }
 
@@ -177,7 +182,7 @@ public class MainActivity extends BaseActivity
             if (data.resolveActivity(getPackageManager()) != null) {
                 startActivity(data);
             } else {
-                Snackbar.make(mFrameLayout, noEmailclient, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mFrameLayout, noEmailClient, Snackbar.LENGTH_SHORT).show();
             }
 
 
@@ -220,6 +225,29 @@ public class MainActivity extends BaseActivity
             }
             setTitle(item.getTitle());
         } else if (id == R.id.nav_switch) {
+            final int themeIndex = ConfigUtil.getInt(Constant.THEME_INDEX, 1);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle(R.string.alert_dialog_single_choice)
+                    .setSingleChoiceItems(R.array.theme_items, themeIndex, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            if (themeIndex != whichButton) {
+                                dialog.dismiss();
+                                // Set the local night mode to some value
+                                switch (whichButton) {
+                                    case 0:
+                                        WanquApplication.setTheme(MainActivity.this, 0);
+                                        break;
+                                    case 1:
+                                        WanquApplication.setTheme(MainActivity.this, 1);
+                                        break;
+                                    case 2:
+                                        WanquApplication.setTheme(MainActivity.this, 2);
+                                        break;
+                                }
+                            }
+                        }
+                    });
+            builder.show();
 
         } else if (id == R.id.nav_about) {
             AboutActivity.actionStart(this);
