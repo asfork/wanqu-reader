@@ -8,27 +8,48 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by steve on 3/26/16.
  */
 public class DateUtil {
+
+    /**
+     * 1s==1000ms
+     */
+    private final static int TIME_MILLISECONDS = 1000;
+    /**
+     * 时间中的分、秒最大值均为60
+     */
+    private final static int TIME_NUMBERS = 60;
+    /**
+     * 时间中的小时最大值
+     */
+    private final static int TIME_HOURSES = 24;
+
+    private final static int TIME_DAYS = 7;
+
     public static String formatTitleDate(String timestampString) {
-        Long timestamp = Long.parseLong(timestampString);
-        return timeStamp2Date(timestamp, WanquApplication.getContext().getString(R.string.date_year));
+        Long timestamp = Long.parseLong(timestampString + "000");
+        return parseDate(timestamp, WanquApplication.getContext().getString(R.string.date_year));
     }
 
     public static String formatDateTime(String timestampString) {
         String text;
-        long dateTime = Long.parseLong(timestampString);
+        long dateTime = Long.parseLong(timestampString + "000");
+//        Log.d("DateUtil", dateTime + "");
         Calendar calendar = GregorianCalendar.getInstance();
+//        Log.d("DateUtil", calendar.getTimeInMillis() + "");
+
         if (isSameDay(dateTime)) {
             if (inOneMinute(dateTime, calendar.getTimeInMillis())) {
                 return WanquApplication.getContext().getString(R.string.date_just_now);
             } else if (inOneHour(dateTime, calendar.getTimeInMillis())) {
                 return String.format(Locale.getDefault(),
                         WanquApplication.getContext().getString(R.string.date_minute),
-                        Math.abs(dateTime - calendar.getTimeInMillis()) / (60 * 1000));
+                        Math.abs(dateTime - calendar.getTimeInMillis())
+                                / (TIME_NUMBERS * TIME_MILLISECONDS));
             } else {
 //                calendar.setTimeInMillis(dateTime);
 //                int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
@@ -43,14 +64,19 @@ public class DateUtil {
 //                }
                 return String.format(Locale.getDefault(),
                         WanquApplication.getContext().getString(R.string.date_hour),
-                        Math.abs(dateTime - calendar.getTimeInMillis()) / (60 * 60 * 1000));
+                        Math.abs(dateTime - calendar.getTimeInMillis())
+                                / (TIME_NUMBERS * TIME_NUMBERS * TIME_MILLISECONDS));
             }
+
         } else if (isYesterday(dateTime)) {
             return WanquApplication.getContext().getString(R.string.date_yesterday);
+
         } else if (isOneWeek(dateTime, calendar.getTimeInMillis())) {
             return String.format(Locale.getDefault(),
                     WanquApplication.getContext().getString(R.string.date_day),
-                    Math.abs(dateTime - calendar.getTimeInMillis()) / (24 * 60 * 60 * 1000));
+                    Math.abs(dateTime - calendar.getTimeInMillis())
+                            / (TIME_HOURSES * TIME_NUMBERS * TIME_NUMBERS * TIME_MILLISECONDS));
+
         } else if (isSameYear(dateTime)) {
             text = WanquApplication.getContext().getString(R.string.date_month);
         } else {
@@ -62,17 +88,17 @@ public class DateUtil {
     }
 
     private static boolean inOneMinute(long time1, long time2) {
-        return Math.abs(time1 - time2) < 60 * 1000;
+        return Math.abs(time1 - time2) < TIME_NUMBERS * TIME_MILLISECONDS;
     }
 
     private static boolean inOneHour(long time1, long time2) {
-        return Math.abs(time1 - time2) < 60 * 60 * 1000;
+        return Math.abs(time1 - time2) < TIME_NUMBERS * TIME_NUMBERS * TIME_MILLISECONDS;
     }
 
     private static boolean isSameDay(long time) {
         long startTime = floorDay(Calendar.getInstance()).getTimeInMillis();
-        long endTime = ceilDay(Calendar.getInstance()).getTimeInMillis();
-        return time > startTime && time < endTime;
+//        long endTime = ceilDay(Calendar.getInstance()).getTimeInMillis();
+        return time > startTime;
     }
 
     private static boolean isYesterday(long time) {
@@ -89,7 +115,8 @@ public class DateUtil {
     }
 
     private static boolean isOneWeek(long time1, long time2) {
-        return Math.abs(time1 - time2) < 7 * 24 * 60 * 60 * 1000;
+        return Math.abs(time1 - time2) <
+                TIME_DAYS * TIME_HOURSES * TIME_NUMBERS * TIME_NUMBERS * TIME_MILLISECONDS;
     }
 
     private static boolean isSameYear(long time) {
@@ -116,7 +143,12 @@ public class DateUtil {
         return endCal;
     }
 
-    private static String timeStamp2Date(Long timestamp, String formats) {
-        return new SimpleDateFormat(formats, Locale.getDefault()).format(new Date(timestamp));
+    private static String parseDate(Long date, String formats) {
+        String timezone = "GMT+08" ;
+
+        SimpleDateFormat df = new SimpleDateFormat(formats, Locale.getDefault());
+        df.setTimeZone(TimeZone.getTimeZone(timezone));
+
+        return df.format(new Date(date));
     }
 }

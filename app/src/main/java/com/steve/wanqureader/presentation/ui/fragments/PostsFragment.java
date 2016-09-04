@@ -1,6 +1,7 @@
 package com.steve.wanqureader.presentation.ui.fragments;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -73,7 +74,10 @@ public class PostsFragment extends BaseFragment
             @Override
             protected void setView(CanHolderHelper viewHelper, final int position, final Post post) {
                 String info = mContext.getResources().getString(R.string.post_info);
+                Uri uri = Uri.parse("http://www.google.com/s2/favicons?domain=" + post.getUrlDomain());
+                Log.d(TAG, post.getUrlDomain());
 
+                viewHelper.setImageURI(R.id.favicon_view, uri);
                 viewHelper.setText(R.id.tv_header_domain, post.getUrlDomain());
                 viewHelper.setText(R.id.tv_header_info, String.format(info,
                         DateUtil.formatDateTime(post.getCreationDate()),

@@ -12,6 +12,9 @@
     <dimen name="element_vertical_padding">8dp</dimen>
     <dimen name="element_horizontal_padding">8dp</dimen>
 
+    <dimen name="favicon_width">12dp</dimen>
+    <dimen name="favicon_height">12dp</dimen>
+
     <dimen name="toolbar_padding_top">0dp</dimen>
     <dimen name="searchview_max_width">280dp</dimen>
 

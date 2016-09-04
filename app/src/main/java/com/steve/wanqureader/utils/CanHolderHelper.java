@@ -3,6 +3,7 @@ package com.steve.wanqureader.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
@@ -17,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.steve.wanqureader.presentation.ui.listeners.CanOnItemListener;
@@ -221,6 +223,12 @@ public class CanHolderHelper implements View.OnClickListener,
     public CanHolderHelper setText(@IdRes int viewId, @StringRes int stringResId) {
         TextView view = getView(viewId);
         view.setText(stringResId);
+        return this;
+    }
+
+    public CanHolderHelper setImageURI(@IdRes int viewId, Uri uri) {
+        SimpleDraweeView view = getView(viewId);
+        view.setImageURI(uri);
         return this;
     }
 

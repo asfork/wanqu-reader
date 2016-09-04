@@ -3,6 +3,7 @@ package com.steve.wanqureader;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orm.SugarContext;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -20,6 +21,7 @@ public class WanquApplication extends Application {
         LeakCanary.install(this);
         mContext = getApplicationContext();
         CrashReport.initCrashReport(getApplicationContext());
+        Fresco.initialize(this);
         SugarContext.init(this);
     }
 
