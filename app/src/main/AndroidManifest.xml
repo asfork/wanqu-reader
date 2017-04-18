@@ -63,7 +63,8 @@
         <activity
             android:name=".presentation.ui.activities.WebViewActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".presentation.ui.activities.MWelcomeActivity" />
+        <activity android:name=".presentation.ui.activities.MWelcomeActivity"
+            android:theme="@style/WelcomeScreenTheme"/>
         <activity
             android:name=".presentation.ui.activities.AboutActivity"
             android:launchMode="singleTask" />

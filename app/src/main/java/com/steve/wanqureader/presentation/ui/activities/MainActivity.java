@@ -23,8 +23,7 @@ import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
-import com.stephentuso.welcome.WelcomeScreenHelper;
-import com.stephentuso.welcome.ui.WelcomeActivity;
+import com.stephentuso.welcome.WelcomeHelper;
 import com.steve.wanqureader.R;
 import com.steve.wanqureader.presentation.ui.fragments.FrontIssuesFragment;
 import com.steve.wanqureader.presentation.ui.fragments.PostsFragment;
@@ -40,12 +39,14 @@ public class MainActivity extends BaseActivity
     private static final String fragmentPosts = "PostsFragment";
     private static final String isFirstLaunch = "isFirstLaunch";
     private static final String isSkipWelcome = "isSkipWelcome";
+    private static final int REQUEST_WELCOME_SCREEN_RESULT = 13;
 
     private PostsFragment mPostFragment;
     private StarredFragment mStarredFragment;
     private FrontIssuesFragment mFrontIssuesFragment;
     private Fragment curFragment;
     private SharedPreferences pref;
+    private WelcomeHelper mWelcomeScreen;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -67,13 +68,10 @@ public class MainActivity extends BaseActivity
     @Override
     protected void initView(Bundle savedInstanceState) {
         // First time launch, show welcome
-        pref = getSharedPreferences("data", MODE_PRIVATE);
-        if (pref.getBoolean(isFirstLaunch, true)) {
-            Log.d(TAG, isFirstLaunch + " is true");
-            new WelcomeScreenHelper(this, MWelcomeActivity.class).show();
-        }
+        mWelcomeScreen = new WelcomeHelper(this, MWelcomeActivity.class);
+        mWelcomeScreen.show(savedInstanceState);
 
-        // First time init, create the UI.
+                // First time init, create the UI.
         if (savedInstanceState == null) {
             mPostFragment = new PostsFragment();
             curFragment = mPostFragment;
@@ -125,22 +123,24 @@ public class MainActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == WelcomeScreenHelper.DEFAULT_WELCOME_SCREEN_REQUEST) {
+        if (requestCode == REQUEST_WELCOME_SCREEN_RESULT) {
 //            String welcomeKey = data.getStringExtra(WelcomeActivity.WELCOME_SCREEN_KEY);
-            SharedPreferences.Editor editor = pref.edit();
 
             if (resultCode == RESULT_OK) {
-                editor.putBoolean(isFirstLaunch, false);
-                editor.putBoolean(isSkipWelcome, false);
 //                Log.d(TAG, welcomeKey + " completed");
             } else {
-                editor.putBoolean(isFirstLaunch, false);
-                editor.putBoolean(isSkipWelcome, true);
 //                Log.d(TAG, welcomeKey + " canceled");
             }
-            editor.apply();
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        mWelcomeScreen.onSaveInstanceState(outState);
+    }
+
 
     @Override
     public void onBackPressed() {
