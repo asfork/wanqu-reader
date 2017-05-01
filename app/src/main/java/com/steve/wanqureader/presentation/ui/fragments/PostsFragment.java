@@ -74,7 +74,7 @@ public class PostsFragment extends BaseFragment
             @Override
             protected void setView(CanHolderHelper viewHelper, final int position, final Post post) {
                 String info = mContext.getResources().getString(R.string.post_info);
-                Uri uri = Uri.parse("http://www.google.com/s2/favicons?domain=" + post.getUrlDomain());
+                Uri uri = Uri.parse(Constant.FAVICON_URL + post.getUrlDomain());
                 Log.d(TAG, post.getUrlDomain());
 
                 viewHelper.setImageURI(R.id.favicon_view, uri);
